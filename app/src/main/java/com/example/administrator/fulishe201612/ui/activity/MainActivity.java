@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     RadioButton btnGeren;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+
     Unbinder bind;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
