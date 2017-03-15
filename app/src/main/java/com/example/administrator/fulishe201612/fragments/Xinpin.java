@@ -38,7 +38,7 @@ public class Xinpin extends Fragment {
     GridSpacingItemDecoration gridSpacingItemDecoration;
 
     INewGoodsModel iNewGoodsModel;
-
+    GridLayoutManager gridLayoutManager;
     public Xinpin() {
         // Required empty public constructor
     }
@@ -70,6 +70,17 @@ public class Xinpin extends Fragment {
 
             }
         });
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int position = gridLayoutManager.findLastVisibleItemPosition();
+                if (recyclerViewAdapter.getItemCount()-1 == position && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    pageId++;
+                    downLoadContactList(ACTION_PULL_UP, pageId);
+                }
+            }
+        });
     }
 
     private void downLoadContactList(final int action, int pageId) {
@@ -84,6 +95,10 @@ public class Xinpin extends Fragment {
                     case ACTION_PULL_DOWN:
                         recyclerViewAdapter.initContact(newGoodsBeen);
                         swiperefresh.setRefreshing(false);
+                        break;
+                    case ACTION_PULL_UP:
+                        recyclerViewAdapter.addAllContact(newGoodsBeen);
+
                 }
             }
 
@@ -127,7 +142,7 @@ public class Xinpin extends Fragment {
         recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), newGoodsBeenList);
 //        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        gridLayoutManager = new GridLayoutManager(getActivity(), 2);
 
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 30, false));
         recyclerView.setLayoutManager(gridLayoutManager);
