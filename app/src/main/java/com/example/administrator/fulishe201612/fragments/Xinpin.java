@@ -11,6 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.adapter.RecyclerViewAdapter;
@@ -37,6 +38,7 @@ public class Xinpin extends Fragment {
     SwipeRefreshLayout swiperefresh;
     GridSpacingItemDecoration gridSpacingItemDecoration;
 
+    TextView textHint;
     INewGoodsModel iNewGoodsModel;
     GridLayoutManager gridLayoutManager;
     public Xinpin() {
@@ -64,7 +66,7 @@ public class Xinpin extends Fragment {
             public void onRefresh() {
                 ImageLoader.release();
                 swiperefresh.setRefreshing(true);
-
+                textHint.setVisibility(View.VISIBLE);
                 pageId = 1;
                 downLoadContactList(ACTION_PULL_DOWN, pageId);
 
@@ -95,6 +97,8 @@ public class Xinpin extends Fragment {
                     case ACTION_PULL_DOWN:
                         recyclerViewAdapter.initContact(newGoodsBeen);
                         swiperefresh.setRefreshing(false);
+                        textHint.setVisibility(View.GONE);
+
                         break;
                     case ACTION_PULL_UP:
                         recyclerViewAdapter.addAllContact(newGoodsBeen);
@@ -136,6 +140,7 @@ public class Xinpin extends Fragment {
     }
 
     private void initView(View inflate) {
+        textHint = (TextView) inflate.findViewById(R.id.textHint);
         swiperefresh = (SwipeRefreshLayout) inflate.findViewById(R.id.swiperefresh);
         newGoodsBeenList = new ArrayList<>();
         recyclerView = (RecyclerView) inflate.findViewById(R.id.recyclerView);
