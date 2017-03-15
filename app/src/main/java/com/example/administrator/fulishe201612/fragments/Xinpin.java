@@ -1,29 +1,27 @@
 package com.example.administrator.fulishe201612.fragments;
 
 
-import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.administrator.fulishe201612.R;
-import com.example.administrator.fulishe201612.application.I;
+import com.example.administrator.fulishe201612.adapter.RecyclerViewAdapter;
 import com.example.administrator.fulishe201612.model.bean.NewGoodsBean;
+import com.example.administrator.fulishe201612.model.net.INewGoodsModel;
+import com.example.administrator.fulishe201612.model.net.NewGoodsModel;
+import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
 import com.example.administrator.fulishe201612.model.utils.ImageLoader;
 import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +35,9 @@ public class Xinpin extends Fragment {
     RecyclerViewAdapter recyclerViewAdapter;
     ArrayList<NewGoodsBean> newGoodsBeenList;
     SwipeRefreshLayout swiperefresh;
+    GridSpacingItemDecoration gridSpacingItemDecoration;
+
+    INewGoodsModel iNewGoodsModel;
 
     public Xinpin() {
         // Required empty public constructor
@@ -50,6 +51,7 @@ public class Xinpin extends Fragment {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_xinpin, container, false);
         initView(inflate);
+        iNewGoodsModel = new NewGoodsModel();
         downLoadContactList(ACTION_PULL_DOWN, pageId);
         setListener();
         return inflate;
@@ -62,6 +64,7 @@ public class Xinpin extends Fragment {
             public void onRefresh() {
                 ImageLoader.release();
                 swiperefresh.setRefreshing(true);
+
                 pageId = 1;
                 downLoadContactList(ACTION_PULL_DOWN, pageId);
 
@@ -71,30 +74,49 @@ public class Xinpin extends Fragment {
 
     private void downLoadContactList(final int action, int pageId) {
         final OkHttpUtils<NewGoodsBean[]> okHttpUtils = new OkHttpUtils<>(getActivity());
-        okHttpUtils.url(I.SERVER_ROOT + I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
-                .addParam(I.NewAndBoutiqueGoods.CAT_ID, I.CAT_ID + "")
-                .addParam(I.PAGE_ID, pageId + "")
-                .addParam(I.PAGE_SIZE, "8")
-                .targetClass(NewGoodsBean[].class)
-                .execute(new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
-                    @Override
-                    public void onSuccess(NewGoodsBean[] result) {
-                        Log.i("mingYue", "onSuccess: " + Arrays.toString(result));
-
-                        ArrayList<NewGoodsBean> newGoodsBeen = okHttpUtils.array2List(result);
-                        switch (action) {
-                            case ACTION_PULL_DOWN:
-                                recyclerViewAdapter.initContact(newGoodsBeen);
-                        }
+        iNewGoodsModel.loadData(getActivity(), pageId, new OnCompleteListener<NewGoodsBean[]>() {
+            @Override
+            public void onSuccess(NewGoodsBean[] result) {
 
 
-                    }
+                ArrayList<NewGoodsBean> newGoodsBeen = okHttpUtils.array2List(result);
+                switch (action) {
+                    case ACTION_PULL_DOWN:
+                        recyclerViewAdapter.initContact(newGoodsBeen);
+                        swiperefresh.setRefreshing(false);
+                }
+            }
 
-                    @Override
-                    public void onError(String error) {
-                        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
-                    }
-                });
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+//        final OkHttpUtils<NewGoodsBean[]> okHttpUtils = new OkHttpUtils<>(getActivity());
+//        okHttpUtils.url(I.SERVER_ROOT + I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
+//                .addParam(I.NewAndBoutiqueGoods.CAT_ID, I.CAT_ID + "")
+//                .addParam(I.PAGE_ID, pageId + "")
+//                .addParam(I.PAGE_SIZE, "8")
+//                .targetClass(NewGoodsBean[].class)
+//                .execute(new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+//                    @Override
+//                    public void onSuccess(NewGoodsBean[] result) {
+//                        Log.i("mingYue", "onSuccess: " + Arrays.toString(result));
+//
+//                        ArrayList<NewGoodsBean> newGoodsBeen = okHttpUtils.array2List(result);
+//                        switch (action) {
+//                            case ACTION_PULL_DOWN:
+//                                recyclerViewAdapter.initContact(newGoodsBeen);
+//                        }
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(String error) {
+//                        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+//                    }
+//                });
 
     }
 
@@ -104,74 +126,49 @@ public class Xinpin extends Fragment {
         recyclerView = (RecyclerView) inflate.findViewById(R.id.recyclerView);
         recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), newGoodsBeenList);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 30, false));
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recyclerViewAdapter);
 
     }
 
-    class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        Context context;
-        ArrayList<NewGoodsBean> goodsList;
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
-        public RecyclerViewAdapter(Context context, ArrayList<NewGoodsBean> goodsList) {
-            this.context = context;
-            this.goodsList = goodsList;
+        private int spanCount;
+        private int spacing;
+        private boolean includeEdge;
+
+        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+            this.spanCount = spanCount;
+            this.spacing = spacing;
+            this.includeEdge = includeEdge;
         }
 
         @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            int position = parent.getChildAdapterPosition(view); // item position
+            int column = position % spanCount; // item column
 
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View inflate = View.inflate(context, R.layout.xinpin_detailinfo, null);
+            if (includeEdge) {
+                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
+                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
 
-
-            return new ContentHolder(inflate);
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            NewGoodsBean goodsBean = goodsList.get(position);
-
-            ContentHolder contentHolder = (ContentHolder) holder;
-            contentHolder.textGoodsprice.setText(goodsBean.getCurrencyPrice());
-            contentHolder.textGoodsmoreinfo.setText(goodsBean.getGoodsBrief());
-            contentHolder.textGoodsinfo.setText(goodsBean.getGoodsName());
-            ImageLoader.downloadImg(context, contentHolder.imageGoods, goodsBean.getGoodsImg());
-        }
-
-        @Override
-        public int getItemCount() {
-            return goodsList.size();
-
-        }
-
-        public void initContact(ArrayList<NewGoodsBean> goodsList) {
-            this.goodsList.clear();
-            this.goodsList.addAll(goodsList);
-            notifyDataSetChanged();
-
-        }
-
-        public void addAllContact(ArrayList<NewGoodsBean> goodsList) {
-            this.goodsList.addAll(goodsList);
-
-            notifyDataSetChanged();
-
+                if (position < spanCount) { // top edge
+                    outRect.top = spacing;
+                }
+                outRect.bottom = spacing; // item bottom
+            } else {
+                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
+                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+                if (position >= spanCount) {
+                    outRect.top = spacing; // item top
+                }
+            }
         }
     }
-
-    class ContentHolder extends RecyclerView.ViewHolder {
-        ImageView imageGoods;
-        TextView textGoodsinfo, textGoodsmoreinfo, textGoodsprice;
-
-        public ContentHolder(View itemView) {
-            super(itemView);
-            imageGoods = (ImageView) itemView.findViewById(R.id.imageGoods);
-            textGoodsinfo = (TextView) itemView.findViewById(R.id.text_Goodsinfo);
-            textGoodsmoreinfo = (TextView) itemView.findViewById(R.id.text_goodsmoreinfo);
-            textGoodsprice = (TextView) itemView.findViewById(R.id.text_Goods_price);
-        }
-    }
-
-
 }
