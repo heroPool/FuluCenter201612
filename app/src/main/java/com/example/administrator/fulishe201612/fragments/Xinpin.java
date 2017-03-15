@@ -41,6 +41,7 @@ public class Xinpin extends Fragment {
     TextView textHint;
     INewGoodsModel iNewGoodsModel;
     GridLayoutManager gridLayoutManager;
+
     public Xinpin() {
         // Required empty public constructor
     }
@@ -61,10 +62,13 @@ public class Xinpin extends Fragment {
     }
 
     private void setListener() {
+        //下拉刷新
         swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 ImageLoader.release();
+
+
                 swiperefresh.setRefreshing(true);
                 textHint.setVisibility(View.VISIBLE);
                 pageId = 1;
@@ -72,17 +76,22 @@ public class Xinpin extends Fragment {
 
             }
         });
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        //上拉加载
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+
                 int position = gridLayoutManager.findLastVisibleItemPosition();
-                if (recyclerViewAdapter.getItemCount()-1 == position && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (recyclerViewAdapter.isMore() && recyclerViewAdapter.getItemCount() - 1 == position && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     pageId++;
                     downLoadContactList(ACTION_PULL_UP, pageId);
                 }
             }
+
+
         });
+
     }
 
     private void downLoadContactList(final int action, int pageId) {
@@ -91,18 +100,29 @@ public class Xinpin extends Fragment {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
 
+                recyclerViewAdapter.setMore(result != null && result.length > 0);
+                if (!recyclerViewAdapter.isMore()) {
+                    if (action == ACTION_PULL_UP) {
+                        recyclerViewAdapter.setTextFooter("没有更多数据...");
+                    }
+                    return;
+                }
 
                 ArrayList<NewGoodsBean> newGoodsBeen = okHttpUtils.array2List(result);
                 switch (action) {
                     case ACTION_PULL_DOWN:
+
+
                         recyclerViewAdapter.initContact(newGoodsBeen);
                         swiperefresh.setRefreshing(false);
                         textHint.setVisibility(View.GONE);
+                        recyclerViewAdapter.setTextFooter("加载更多");
 
                         break;
                     case ACTION_PULL_UP:
                         recyclerViewAdapter.addAllContact(newGoodsBeen);
 
+                        break;
                 }
             }
 
@@ -153,6 +173,17 @@ public class Xinpin extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recyclerViewAdapter);
+
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int viewType = recyclerViewAdapter.getItemViewType(position);
+                if (viewType == RecyclerViewAdapter.TYPE_FOOTER) {
+                    return 2;
+                }
+                return 1;
+            }
+        });
 
     }
 

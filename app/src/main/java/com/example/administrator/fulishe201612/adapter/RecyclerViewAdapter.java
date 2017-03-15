@@ -21,8 +21,32 @@ import butterknife.ButterKnife;
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public static final int TYPE_CONTACT = 1;
+    public static final int TYPE_FOOTER = 2;
+
     Context context;
     ArrayList<NewGoodsBean> goodsList;
+
+    String textFooter;
+    boolean isMore = true;
+
+    public String getTextFooter() {
+        return textFooter;
+    }
+
+    public void setTextFooter(String textFooter) {
+        this.textFooter = textFooter;
+        notifyDataSetChanged();
+
+    }
+
+    public boolean isMore() {
+        return isMore;
+    }
+
+    public void setMore(boolean more) {
+        isMore = more;
+    }
 
     public RecyclerViewAdapter(Context context, ArrayList<NewGoodsBean> goodsList) {
         this.context = context;
@@ -32,14 +56,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
 
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_FOOTER) {
+            View inflate = View.inflate(context, R.layout.xinppin_footer, null);
+            return new FooterHolder(inflate);
+        }
+
         View inflate = View.inflate(context, R.layout.xinpin_detailinfo, null);
-
-
         return new ViewHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (getItemViewType(position) == TYPE_FOOTER) {
+            FooterHolder footerHolder = (FooterHolder) holder;
+            footerHolder.textviewfooter.setText(textFooter);
+            return;
+        }
         NewGoodsBean goodsBean = goodsList.get(position);
 
         ViewHolder contentHolder = (ViewHolder) holder;
@@ -50,8 +82,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (getItemCount() - 1 == position) {
+            return TYPE_FOOTER;
+        }
+        return TYPE_CONTACT;
+
+    }
+
+    @Override
     public int getItemCount() {
-        return goodsList.size();
+
+        return goodsList != null ? goodsList.size() + 1 : 1;
 
     }
 
@@ -82,6 +124,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //        }
 //    }
 
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.imageGoods)
         ImageView imageGoods;
@@ -93,6 +136,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView textGoodsPrice;
 
         ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+
+    static class FooterHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.textfooter)
+        TextView textviewfooter;
+
+        FooterHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
