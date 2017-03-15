@@ -128,9 +128,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.imageGoods)
         ImageView imageGoods;
-        @BindView(R.id.text_Goodsinfo)
+        @BindView(R.id.texttitle)
         TextView textGoodsinfo;
-        @BindView(R.id.text_goodsmoreinfo)
+        @BindView(R.id.textname)
         TextView textGoodsmoreinfo;
         @BindView(R.id.text_Goods_price)
         TextView textGoodsPrice;

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class Xinpin extends Fragment {
     private static final int ACTION_DOWNLOAD = 1;
     private static final int ACTION_PULL_DOWN = 2;
