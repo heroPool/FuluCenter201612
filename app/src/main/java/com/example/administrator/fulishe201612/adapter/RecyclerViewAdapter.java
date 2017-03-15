@@ -13,10 +13,13 @@ import com.example.administrator.fulishe201612.model.utils.ImageLoader;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Administrator on 2017/3/15.
  */
- public  class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
     ArrayList<NewGoodsBean> goodsList;
@@ -32,15 +35,15 @@ import java.util.ArrayList;
         View inflate = View.inflate(context, R.layout.xinpin_detailinfo, null);
 
 
-        return new ContentHolder(inflate);
+        return new ViewHolder(inflate);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         NewGoodsBean goodsBean = goodsList.get(position);
 
-       ContentHolder contentHolder = (ContentHolder) holder;
-        contentHolder.textGoodsprice.setText(goodsBean.getCurrencyPrice());
+        ViewHolder contentHolder = (ViewHolder) holder;
+        contentHolder.textGoodsPrice.setText(goodsBean.getCurrencyPrice());
         contentHolder.textGoodsmoreinfo.setText(goodsBean.getGoodsBrief());
         contentHolder.textGoodsinfo.setText(goodsBean.getGoodsName());
         ImageLoader.downloadImg(context, contentHolder.imageGoods, goodsBean.getGoodsImg());
@@ -66,16 +69,32 @@ import java.util.ArrayList;
 
     }
 
-    class ContentHolder extends RecyclerView.ViewHolder {
-        ImageView imageGoods;
-        TextView textGoodsinfo, textGoodsmoreinfo, textGoodsprice;
+//    class ContentHolder extends RecyclerView.ViewHolder {
+//        ImageView imageGoods;
+//        TextView textGoodsinfo, textGoodsmoreinfo, textGoodsprice;
+//
+//        public ContentHolder(View itemView) {
+//            super(itemView);
+//            imageGoods = (ImageView) itemView.findViewById(R.id.imageGoods);
+//            textGoodsinfo = (TextView) itemView.findViewById(R.id.text_Goodsinfo);
+//            textGoodsmoreinfo = (TextView) itemView.findViewById(R.id.text_goodsmoreinfo);
+//            textGoodsprice = (TextView) itemView.findViewById(R.id.text_Goods_price);
+//        }
+//    }
 
-        public ContentHolder(View itemView) {
-            super(itemView);
-            imageGoods = (ImageView) itemView.findViewById(R.id.imageGoods);
-            textGoodsinfo = (TextView) itemView.findViewById(R.id.text_Goodsinfo);
-            textGoodsmoreinfo = (TextView) itemView.findViewById(R.id.text_goodsmoreinfo);
-            textGoodsprice = (TextView) itemView.findViewById(R.id.text_Goods_price);
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.imageGoods)
+        ImageView imageGoods;
+        @BindView(R.id.text_Goodsinfo)
+        TextView textGoodsinfo;
+        @BindView(R.id.text_goodsmoreinfo)
+        TextView textGoodsmoreinfo;
+        @BindView(R.id.text_Goods_price)
+        TextView textGoodsPrice;
+
+        ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
         }
     }
 }

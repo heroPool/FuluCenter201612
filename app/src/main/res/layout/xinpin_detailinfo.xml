@@ -14,8 +14,9 @@
 
         <ImageView
             android:id="@+id/imageGoods"
+            android:src="@mipmap/ic_launcher"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="100dp" />
 
         <TextView
             android:id="@+id/text_Goodsinfo"
@@ -26,13 +27,13 @@
 
         <TextView
             android:id="@+id/text_goodsmoreinfo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2" />
 
         <TextView
             android:id="@+id/text_Goods_price"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#e24343" />
     </LinearLayout>

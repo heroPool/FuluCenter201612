@@ -125,12 +125,12 @@ public class Xinpin extends Fragment {
         newGoodsBeenList = new ArrayList<>();
         recyclerView = (RecyclerView) inflate.findViewById(R.id.recyclerView);
         recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), newGoodsBeenList);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+//        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
 
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
 
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 30, false));
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recyclerViewAdapter);
 
