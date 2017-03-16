@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@mipmap/bg_collect_in"
+        android:title="收藏"
+        app:showAsAction="always" />
+    <item
+        android:icon="@mipmap/bg_share_nor"
+        android:title="分享"
+        app:showAsAction="always" />
+</menu>

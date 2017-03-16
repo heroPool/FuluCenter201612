@@ -142,7 +142,8 @@ public class Jingxuan extends Fragment {
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
 
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, 30, false));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, 20
+                , false));
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recyclerViewAdapter);

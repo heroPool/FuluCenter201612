@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.adapter.ExpandableAdapter;
 import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.CategoryChildBean;
 import com.example.administrator.fulishe201612.model.bean.CategoryGroupBean;
+import com.example.administrator.fulishe201612.model.net.CateListModel;
+import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
 import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
 
 import java.util.ArrayList;
@@ -33,58 +36,52 @@ public class Fenlei extends Fragment {
     ExpandableAdapter expandableAdapter;
 
     public Fenlei() {
-        // Required empty public constructor
+
     }
 
+    CateListModel cateListModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_fenlei, container, false);
-
+        cateListModel = new CateListModel();
         categoryGroupBeen = new ArrayList<>();
         categoryChildBeen = new ArrayList<>();
 
 
-        initView(inflate);
+
         initData();
+        initView(inflate);
         return inflate;
     }
 
     private void initData() {
+        cateListModel.loadData(getActivity(), new OnCompleteListener<CategoryGroupBean[]>() {
+            @Override
+            public void onSuccess(CategoryGroupBean[] result) {
+                ArrayList<CategoryGroupBean> list = OkHttpUtils.array2List(result);
+                expandableAdapter.initContactgroup(list);
+                for (CategoryGroupBean l : list) {
+                    int id = l.getId();
+                    downloadChildcate(id);
+                }
+                expandableAdapter.initContactchild(categoryChildBeen);
 
-        final OkHttpUtils<CategoryGroupBean[]> okHttpUtils = new OkHttpUtils<>(getActivity());
-        okHttpUtils.setRequestUrl(I.REQUEST_FIND_CATEGORY_GROUP)
-                .targetClass(CategoryGroupBean[].class)
-                .execute(new OkHttpUtils.OnCompleteListener<CategoryGroupBean[]>() {
-                    @Override
-                    public void onSuccess(CategoryGroupBean[] result) {
-                        ArrayList<CategoryGroupBean> list = okHttpUtils.array2List(result);
-                        expandableAdapter.initContactgroup(list);
-                        for (CategoryGroupBean l : list) {
-                            int id = l.getId();
-                            downloadChildcate(okHttpUtils,id);
-                        }
-                        expandableAdapter.initContactchild(categoryChildBeen);
-                    }
+            }
 
-                    @Override
-                    public void onError(String error) {
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
-                    }
-                });
-//        ArrayList<CategoryGroupBean> categoryGroupBeenL = expandableAdapter.getCategoryGroupBeen();
-//        for (int i = 0; i < categoryGroupBeenL.size(); i++) {
-//            CategoryGroupBean bean = categoryGroupBeenL.get(i);
-//            int id = bean.getId();
-//            Log.i("main", id + "");
-//            downloadChildcate(id);
-//        }
     }
 
-    private void downloadChildcate(final OkHttpUtils okHttpUtils, final int parentId) {
 
+    private void downloadChildcate(final int parentId) {
+        final OkHttpUtils<CategoryChildBean[]> okHttpUtils = new OkHttpUtils<>(getActivity());
         okHttpUtils.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
                 .addParam(I.CategoryChild.PARENT_ID, parentId + "")
                 .targetClass(CategoryChildBean[].class)
@@ -97,6 +94,7 @@ public class Fenlei extends Fragment {
 
                     @Override
                     public void onError(String error) {
+                        Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_SHORT).show();
 
                     }
                 });

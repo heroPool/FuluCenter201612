@@ -12,7 +12,7 @@ import com.example.administrator.fulishe201612.fragments.Xinpin;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BoutiqueAndList extends AppCompatActivity implements View.OnClickListener {
+public class BoutiqueAndListActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.imageback)
     ImageView imageback;

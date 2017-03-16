@@ -1,6 +1,7 @@
 package com.example.administrator.fulishe201612.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.fulishe201612.R;
+import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.NewGoodsBean;
 import com.example.administrator.fulishe201612.model.utils.ImageLoader;
+import com.example.administrator.fulishe201612.ui.activity.GoodsDetialsActivtiy;
 
 import java.util.ArrayList;
 
@@ -72,13 +75,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             footerHolder.textviewfooter.setText(textFooter);
             return;
         }
-        NewGoodsBean goodsBean = goodsList.get(position);
+        final NewGoodsBean goodsBean = goodsList.get(position);
 
         ViewHolder contentHolder = (ViewHolder) holder;
         contentHolder.textGoodsPrice.setText(goodsBean.getCurrencyPrice());
         contentHolder.textGoodsmoreinfo.setText(goodsBean.getGoodsBrief());
         contentHolder.textGoodsinfo.setText(goodsBean.getGoodsName());
         ImageLoader.downloadImg(context, contentHolder.imageGoods, goodsBean.getGoodsImg());
+        contentHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, GoodsDetialsActivtiy.class)
+                        .putExtra(I.Goods.KEY_GOODS_ID, goodsBean.getGoodsId())
+                );
+            }
+        });
+
     }
 
     @Override

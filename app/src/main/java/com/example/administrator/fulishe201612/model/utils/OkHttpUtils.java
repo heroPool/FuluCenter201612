@@ -463,7 +463,7 @@ public class OkHttpUtils<T> {
         sendMessage(OkHttpUtils.DOWNLOAD_FINISH);
     }
 
-    public <T>  ArrayList<T> array2List(T[] array) {
+    public static <T>  ArrayList<T> array2List(T[] array) {
         List<T> list = Arrays.asList(array);
         ArrayList<T> arrayList = new ArrayList<>(list);
         return arrayList;

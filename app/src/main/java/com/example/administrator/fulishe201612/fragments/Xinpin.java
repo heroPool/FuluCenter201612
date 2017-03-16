@@ -178,7 +178,7 @@ public class Xinpin extends Fragment {
 
         gridLayoutManager = new GridLayoutManager(getActivity(), 2);
 
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 30, false));
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 20, false));
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(recyclerViewAdapter);

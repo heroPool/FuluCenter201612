@@ -16,7 +16,7 @@ import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.BoutiqueBean;
 import com.example.administrator.fulishe201612.model.utils.ImageLoader;
-import com.example.administrator.fulishe201612.ui.activity.BoutiqueAndList;
+import com.example.administrator.fulishe201612.ui.activity.BoutiqueAndListActivity;
 
 import java.util.ArrayList;
 
@@ -64,7 +64,7 @@ public class RecyclerViewAdapterBou extends RecyclerView.Adapter<RecyclerView.Vi
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity(new Intent(context, BoutiqueAndList.class)
+                context.startActivity(new Intent(context, BoutiqueAndListActivity.class)
                         .putExtra(I.NewAndBoutiqueGoods.CAT_ID, boutiqueBean.getId())
                         .putExtra("title",boutiqueBean.getTitle())
                 );
