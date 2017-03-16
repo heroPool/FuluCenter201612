@@ -64,9 +64,7 @@ public class Fenlei extends Fragment {
                         expandableAdapter.initContactgroup(list);
                         for (CategoryGroupBean l : list) {
                             int id = l.getId();
-                            Log.i("list", "id" + id + "");
-
-                            downloadChildcate(id);
+                            downloadChildcate(okHttpUtils,id);
                         }
                         expandableAdapter.initContactchild(categoryChildBeen);
                     }
@@ -83,21 +81,17 @@ public class Fenlei extends Fragment {
 //            Log.i("main", id + "");
 //            downloadChildcate(id);
 //        }
-
-        Log.i("list", "cate" + categoryChildBeen.toString());
-
-
     }
 
-    private void downloadChildcate(final int parentId) {
-        final OkHttpUtils<CategoryChildBean[]> okHttpUtils1 = new OkHttpUtils<>(getActivity());
-        okHttpUtils1.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
+    private void downloadChildcate(final OkHttpUtils okHttpUtils, final int parentId) {
+
+        okHttpUtils.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
                 .addParam(I.CategoryChild.PARENT_ID, parentId + "")
                 .targetClass(CategoryChildBean[].class)
                 .execute(new OkHttpUtils.OnCompleteListener<CategoryChildBean[]>() {
                     @Override
                     public void onSuccess(CategoryChildBean[] result) {
-                        ArrayList<CategoryChildBean> list = okHttpUtils1.array2List(result);
+                        ArrayList<CategoryChildBean> list = okHttpUtils.array2List(result);
                         categoryChildBeen.add(list);
                     }
 

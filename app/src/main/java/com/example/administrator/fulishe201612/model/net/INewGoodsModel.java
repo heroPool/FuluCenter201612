@@ -9,5 +9,6 @@ import com.example.administrator.fulishe201612.model.bean.NewGoodsBean;
  */
 
 public interface INewGoodsModel{
-    void loadData(Context context, int pageId, OnCompleteListener<NewGoodsBean[]> listener);
+    void loadData(Context context, int cat_id,int pageId, OnCompleteListener<NewGoodsBean[]> listener);
+
 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.adapter.RecyclerViewAdapter;
+import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.NewGoodsBean;
 import com.example.administrator.fulishe201612.model.net.INewGoodsModel;
 import com.example.administrator.fulishe201612.model.net.NewGoodsModel;
@@ -48,6 +49,7 @@ public class Xinpin extends Fragment {
     }
 
     int pageId = 1;
+    int cat_id;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,7 +57,10 @@ public class Xinpin extends Fragment {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_xinpin, container, false);
         initView(inflate);
+        cat_id = getActivity().getIntent().getIntExtra(I.NewAndBoutiqueGoods.CAT_ID, 0);
+
         iNewGoodsModel = new NewGoodsModel();
+
         downLoadContactList(ACTION_PULL_DOWN, pageId);
         setListener();
         return inflate;
@@ -95,9 +100,12 @@ public class Xinpin extends Fragment {
 
     }
 
+
     private void downLoadContactList(final int action, int pageId) {
+
         final OkHttpUtils<NewGoodsBean[]> okHttpUtils = new OkHttpUtils<>(getActivity());
-        iNewGoodsModel.loadData(getActivity(), pageId, new OnCompleteListener<NewGoodsBean[]>() {
+
+        iNewGoodsModel.loadData(getActivity(), cat_id, pageId, new OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
 

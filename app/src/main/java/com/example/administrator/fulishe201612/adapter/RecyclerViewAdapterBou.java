@@ -5,6 +5,7 @@ package com.example.administrator.fulishe201612.adapter;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.fulishe201612.R;
+import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.BoutiqueBean;
 import com.example.administrator.fulishe201612.model.utils.ImageLoader;
+import com.example.administrator.fulishe201612.ui.activity.BoutiqueAndList;
 
 import java.util.ArrayList;
 
@@ -50,14 +53,25 @@ public class RecyclerViewAdapterBou extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ViewHolder viewHolder = (ViewHolder) holder;
-        BoutiqueBean boutiqueBean = goodsList.get(position);
+        final ViewHolder viewHolder = (ViewHolder) holder;
+        final BoutiqueBean boutiqueBean = goodsList.get(position);
         viewHolder.textname.setText(boutiqueBean.getName());
         viewHolder.texttitle.setText(boutiqueBean.getTitle());
         viewHolder.textdescription.setText(boutiqueBean.getDescription());
 
         ImageLoader.downloadImg(context, viewHolder.imageGoods, boutiqueBean.getImageurl());
-    }
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, BoutiqueAndList.class)
+                        .putExtra(I.NewAndBoutiqueGoods.CAT_ID, boutiqueBean.getId())
+                        .putExtra("title",boutiqueBean.getTitle())
+                );
+            }
+        });
+
+}
 
     @Override
     public int getItemViewType(int position) {
