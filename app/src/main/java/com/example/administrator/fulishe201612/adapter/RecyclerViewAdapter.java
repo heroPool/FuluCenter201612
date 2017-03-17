@@ -82,6 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         contentHolder.textGoodsmoreinfo.setText(goodsBean.getGoodsBrief());
         contentHolder.textGoodsinfo.setText(goodsBean.getGoodsName());
         ImageLoader.downloadImg(context, contentHolder.imageGoods, goodsBean.getGoodsImg());
+
         contentHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +138,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //    }
 
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.imageGoods)
         ImageView imageGoods;
         @BindView(R.id.texttitle)
@@ -153,7 +154,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    static class FooterHolder extends RecyclerView.ViewHolder {
+     class FooterHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textfooter)
         TextView textviewfooter;
 

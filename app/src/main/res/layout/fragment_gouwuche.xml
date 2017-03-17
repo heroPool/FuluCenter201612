@@ -8,27 +8,38 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_alignParentBottom="true">
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:background="#fff">
+
+        <TextView
+            android:id="@+id/texteHeji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="119dp"
+            android:layout_marginTop="4dp"
+            android:text="合计:"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textJiesheng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/texteHeji"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="3dp"
+            android:text="节省:"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textJiesuan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="合计"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-
-            android:layout_height="wrap_content"
-            android:text="节省"
-            android:textSize="18sp" />
-
-        <TextView
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:background="#fc6d37"
             android:gravity="center"
             android:text="结算"

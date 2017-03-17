@@ -1,8 +1,11 @@
 package com.example.administrator.fulishe201612.fragments;
 
 
+import android.app.ProgressDialog;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -51,6 +54,7 @@ public class Xinpin extends Fragment {
     int pageId = 1;
     int cat_id;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -60,21 +64,21 @@ public class Xinpin extends Fragment {
         cat_id = getActivity().getIntent().getIntExtra(I.NewAndBoutiqueGoods.CAT_ID, 0);
 
         iNewGoodsModel = new NewGoodsModel();
+        downData();
+        setListener();
 
         downLoadContactList(ACTION_PULL_DOWN, pageId);
-        setListener();
+
         return inflate;
 
     }
 
     private void setListener() {
         //下拉刷新
+
         swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ImageLoader.release();
-
-
                 swiperefresh.setRefreshing(true);
                 textHint.setVisibility(View.VISIBLE);
                 pageId = 1;
@@ -100,15 +104,37 @@ public class Xinpin extends Fragment {
 
     }
 
+    Handler handler;
+    ProgressDialog progressDialog;
+
+    private void downData() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("玩命加载中...");
+        handler = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case 1:
+                        progressDialog.show();
+                        break;
+                    case 2:
+                        progressDialog.dismiss();
+                        break;
+                }
+            }
+        };
+
+    }
 
     private void downLoadContactList(final int action, int pageId) {
 
         final OkHttpUtils<NewGoodsBean[]> okHttpUtils = new OkHttpUtils<>(getActivity());
-
+        handler.sendEmptyMessage(1);
         iNewGoodsModel.loadData(getActivity(), cat_id, pageId, new OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
-
+                handler.sendEmptyMessage(2);
                 recyclerViewAdapter.setMore(result != null && result.length > 0);
                 if (!recyclerViewAdapter.isMore()) {
                     if (action == ACTION_PULL_UP) {
@@ -120,8 +146,7 @@ public class Xinpin extends Fragment {
                 ArrayList<NewGoodsBean> newGoodsBeen = okHttpUtils.array2List(result);
                 switch (action) {
                     case ACTION_PULL_DOWN:
-
-
+                        ImageLoader.release();
                         recyclerViewAdapter.initContact(newGoodsBeen);
                         swiperefresh.setRefreshing(false);
                         textHint.setVisibility(View.GONE);
@@ -140,31 +165,7 @@ public class Xinpin extends Fragment {
 
             }
         });
-//        final OkHttpUtils<NewGoodsBean[]> okHttpUtils = new OkHttpUtils<>(getActivity());
-//        okHttpUtils.url(I.SERVER_ROOT + I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
-//                .addParam(I.NewAndBoutiqueGoods.CAT_ID, I.CAT_ID + "")
-//                .addParam(I.PAGE_ID, pageId + "")
-//                .addParam(I.PAGE_SIZE, "8")
-//                .targetClass(NewGoodsBean[].class)
-//                .execute(new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
-//                    @Override
-//                    public void onSuccess(NewGoodsBean[] result) {
-//                        Log.i("mingYue", "onSuccess: " + Arrays.toString(result));
-//
-//                        ArrayList<NewGoodsBean> newGoodsBeen = okHttpUtils.array2List(result);
-//                        switch (action) {
-//                            case ACTION_PULL_DOWN:
-//                                recyclerViewAdapter.initContact(newGoodsBeen);
-//                        }
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(String error) {
-//                        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
-//                    }
-//                });
+
 
     }
 

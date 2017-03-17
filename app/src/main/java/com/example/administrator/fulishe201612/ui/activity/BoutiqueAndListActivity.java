@@ -11,6 +11,7 @@ import com.example.administrator.fulishe201612.fragments.Xinpin;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class BoutiqueAndListActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -19,11 +20,14 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
     @BindView(R.id.textTitle)
     TextView textTitle;
     String title;
+
+    Unbinder bind;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boutique_and_list);
-        ButterKnife.bind(this);
+         bind = ButterKnife.bind(this);
         title= getIntent().getStringExtra("title");
         textTitle.setText(title);
 
@@ -40,5 +44,11 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
                 break;
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();bind.unbind();
     }
 }

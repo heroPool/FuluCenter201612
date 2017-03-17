@@ -51,10 +51,11 @@ public class Fenlei extends Fragment {
         categoryChildBeen = new ArrayList<>();
 
 
-
         initData();
         initView(inflate);
+
         return inflate;
+
     }
 
     private void initData() {
@@ -62,11 +63,13 @@ public class Fenlei extends Fragment {
             @Override
             public void onSuccess(CategoryGroupBean[] result) {
                 ArrayList<CategoryGroupBean> list = OkHttpUtils.array2List(result);
-                expandableAdapter.initContactgroup(list);
-                for (CategoryGroupBean l : list) {
-                    int id = l.getId();
-                    downloadChildcate(id);
+
+                for (int i = 0; i < list.size(); i++) {
+                    int id = list.get(i).getId();
+                    categoryChildBeen.add(new ArrayList<CategoryChildBean>());
+                    downloadChildcate(id, i);
                 }
+                expandableAdapter.initContactgroup(list);
                 expandableAdapter.initContactchild(categoryChildBeen);
 
             }
@@ -80,7 +83,9 @@ public class Fenlei extends Fragment {
     }
 
 
-    private void downloadChildcate(final int parentId) {
+
+    private void downloadChildcate(final int parentId, final int index) {
+
         final OkHttpUtils<CategoryChildBean[]> okHttpUtils = new OkHttpUtils<>(getActivity());
         okHttpUtils.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
                 .addParam(I.CategoryChild.PARENT_ID, parentId + "")
@@ -89,7 +94,7 @@ public class Fenlei extends Fragment {
                     @Override
                     public void onSuccess(CategoryChildBean[] result) {
                         ArrayList<CategoryChildBean> list = okHttpUtils.array2List(result);
-                        categoryChildBeen.add(list);
+                        categoryChildBeen.set(index, list);
                     }
 
                     @Override
@@ -104,6 +109,14 @@ public class Fenlei extends Fragment {
         expandableListView = (ExpandableListView) inflate.findViewById(R.id.expandableListView);
         expandableAdapter = new ExpandableAdapter(getActivity(), categoryGroupBeen, categoryChildBeen);
         expandableListView.setAdapter(expandableAdapter);
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                return false;
+            }
+        });
     }
 
 }

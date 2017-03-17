@@ -20,6 +20,7 @@ import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class GoodsDetialsActivtiy extends AppCompatActivity {
 
@@ -41,12 +42,12 @@ public class GoodsDetialsActivtiy extends AppCompatActivity {
     @BindView(R.id.webView)
     WebView webView;
     CollapsingToolbarLayout collapsingToolbarLayout;
-
+    Unbinder bind;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_detials_activtiy);
-        ButterKnife.bind(this);
+       bind = ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -125,5 +126,12 @@ public class GoodsDetialsActivtiy extends AppCompatActivity {
         }
 
         return s;
+    }
+
+    @Override
+    protected void onDestroy() {
+
+
+        super.onDestroy(); bind.unbind();
     }
 }

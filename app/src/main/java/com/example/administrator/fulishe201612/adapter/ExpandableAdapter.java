@@ -34,7 +34,6 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
     }
 
 
-
     @Override
 
     public int getGroupCount() {
@@ -77,6 +76,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new GroupHolder();
             convertView = View.inflate(context, R.layout.item_group, null);
+
             holder.textGroupName = (TextView) convertView.findViewById(R.id.textGroupName);
             holder.imageGroup = (ImageView) convertView.findViewById(R.id.imageGroup);
             convertView.setTag(holder);
@@ -96,6 +96,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new ChildeHolder();
             convertView = View.inflate(context, R.layout.item_child, null);
+
             holder.textChildname = (TextView) convertView.findViewById(R.id.textChildName);
             holder.imageChild = (ImageView) convertView.findViewById(R.id.imageChild);
             convertView.setTag(holder);
@@ -131,6 +132,7 @@ public class ExpandableAdapter extends BaseExpandableListAdapter {
     }
 
     public void initContactgroup(ArrayList<CategoryGroupBean> goodsList) {
+        this.categoryGroupBeen.clear();
 
         this.categoryGroupBeen.addAll(goodsList);
         notifyDataSetChanged();

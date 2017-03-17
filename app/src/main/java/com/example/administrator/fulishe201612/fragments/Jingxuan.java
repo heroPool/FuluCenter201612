@@ -68,7 +68,7 @@ public class Jingxuan extends Fragment {
         swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                ImageLoader.release();
+
                 swiperefresh.setRefreshing(true);
                 textHint.setVisibility(View.VISIBLE);
                 pageId = 1;
@@ -110,7 +110,7 @@ public class Jingxuan extends Fragment {
                 ArrayList<BoutiqueBean> newGoodsBeen = okHttpUtils.array2List(result);
                 switch (action) {
                     case ACTION_PULL_DOWN:
-
+                        ImageLoader.release();
 
                         recyclerViewAdapter.initContact(newGoodsBeen);
                         swiperefresh.setRefreshing(false);
