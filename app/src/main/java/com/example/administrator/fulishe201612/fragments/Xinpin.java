@@ -11,15 +11,18 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.adapter.RecyclerViewAdapter;
 import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.NewGoodsBean;
+import com.example.administrator.fulishe201612.model.net.FindGoodsDetails;
 import com.example.administrator.fulishe201612.model.net.INewGoodsModel;
 import com.example.administrator.fulishe201612.model.net.NewGoodsModel;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
@@ -61,9 +64,18 @@ public class Xinpin extends Fragment {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_xinpin, container, false);
         initView(inflate);
+
         cat_id = getActivity().getIntent().getIntExtra(I.NewAndBoutiqueGoods.CAT_ID, 0);
 
-        iNewGoodsModel = new NewGoodsModel();
+        String boolea = getActivity().getIntent().getStringExtra("boolea");
+
+        if (boolea!=null) {
+            iNewGoodsModel = new FindGoodsDetails();
+        } else {
+            iNewGoodsModel = new NewGoodsModel();
+        }
+
+
         downData();
         setListener();
 
@@ -134,6 +146,7 @@ public class Xinpin extends Fragment {
         iNewGoodsModel.loadData(getActivity(), cat_id, pageId, new OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
+
                 handler.sendEmptyMessage(2);
                 recyclerViewAdapter.setMore(result != null && result.length > 0);
                 if (!recyclerViewAdapter.isMore()) {
@@ -155,7 +168,6 @@ public class Xinpin extends Fragment {
                         break;
                     case ACTION_PULL_UP:
                         recyclerViewAdapter.addAllContact(newGoodsBeen);
-
                         break;
                 }
             }
@@ -163,6 +175,7 @@ public class Xinpin extends Fragment {
             @Override
             public void onError(String error) {
 
+                Toast.makeText(getActivity(), "失败" + error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

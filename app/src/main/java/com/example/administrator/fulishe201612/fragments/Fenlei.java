@@ -1,6 +1,7 @@
 package com.example.administrator.fulishe201612.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,6 +19,9 @@ import com.example.administrator.fulishe201612.model.bean.CategoryGroupBean;
 import com.example.administrator.fulishe201612.model.net.CateListModel;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
 import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
+import com.example.administrator.fulishe201612.ui.activity.BoutiqueAndListActivity;
+import com.example.administrator.fulishe201612.ui.activity.GoodsDetialsActivtiy;
+import com.example.administrator.fulishe201612.ui.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,7 +87,6 @@ public class Fenlei extends Fragment {
     }
 
 
-
     private void downloadChildcate(final int parentId, final int index) {
 
         final OkHttpUtils<CategoryChildBean[]> okHttpUtils = new OkHttpUtils<>(getActivity());
@@ -113,6 +116,11 @@ public class Fenlei extends Fragment {
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                startActivity(new Intent(getActivity(), BoutiqueAndListActivity.class)
+                        .putExtra("title", categoryChildBeen.get(groupPosition).get(childPosition).getName())
+                        .putExtra(I.NewAndBoutiqueGoods.CAT_ID, categoryChildBeen.get(groupPosition).get(childPosition).getId())
+                        .putExtra("boolea", "1")
+                );
 
                 return false;
             }

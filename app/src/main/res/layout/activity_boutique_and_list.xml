@@ -34,6 +34,29 @@
 
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_Sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <CheckBox
+            android:id="@+id/priceSort"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="价格" />
+
+        <CheckBox
+            android:id="@+id/timeSort"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="时间" />
+    </LinearLayout>
+
     <TextView
 
         android:layout_width="match_parent"
