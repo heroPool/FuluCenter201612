@@ -15,6 +15,8 @@ import com.example.administrator.fulishe201612.model.utils.ImageLoader;
 import com.example.administrator.fulishe201612.ui.activity.GoodsDetialsActivtiy;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,7 +65,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View inflate = View.inflate(context, R.layout.xinppin_footer, null);
             return new FooterHolder(inflate);
         }
-
         View inflate = View.inflate(context, R.layout.xinpin_detailinfo, null);
         return new ViewHolder(inflate);
     }
@@ -100,7 +101,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return TYPE_FOOTER;
         }
         return TYPE_CONTACT;
-
     }
 
     @Override
@@ -114,31 +114,51 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.goodsList.clear();
         this.goodsList.addAll(goodsList);
         notifyDataSetChanged();
-
     }
 
     public void addAllContact(ArrayList<NewGoodsBean> goodsList) {
         this.goodsList.addAll(goodsList);
+        notifyDataSetChanged();
+    }
 
+    int sortBy;
+
+    public  void setSortBy(int sortBy) {
+        this.sortBy = sortBy;
+        sortBy();
         notifyDataSetChanged();
 
     }
 
-//    class ContentHolder extends RecyclerView.ViewHolder {
-//        ImageView imageGoods;
-//        TextView textGoodsinfo, textGoodsmoreinfo, textGoodsprice;
-//
-//        public ContentHolder(View itemView) {
-//            super(itemView);
-//            imageGoods = (ImageView) itemView.findViewById(R.id.imageGoods);
-//            textGoodsinfo = (TextView) itemView.findViewById(R.id.text_Goodsinfo);
-//            textGoodsmoreinfo = (TextView) itemView.findViewById(R.id.text_goodsmoreinfo);
-//            textGoodsprice = (TextView) itemView.findViewById(R.id.text_Goods_price);
-//        }
-//    }
+    private void sortBy() {
+        Collections.sort(goodsList, new Comparator<NewGoodsBean>() {
+            @Override
+            public int compare(NewGoodsBean o1, NewGoodsBean o2) {
+                int result = 0;
+                switch (sortBy) {
+                    case I.SORT_BY_ADDTIME_ASC:
+                        result = (int) (o1.getAddTime() - o2.getAddTime());
+                        break;
+                    case I.SORT_BY_ADDTIME_DESC:
+                        result = (int) (o2.getAddTime() - o1.getAddTime());
+                        break;
+                    case I.SORT_BY_PRICE_ASC:
+                        result = getPrice(o1.getCurrencyPrice()) - getPrice(o2.getCurrencyPrice());
+                        break;
+                    case I.SORT_BY_PRICE_DESC:
+                        result = getPrice(o2.getCurrencyPrice()) - getPrice(o1.getCurrencyPrice());
+                        break;
+                }
+                return result;
+            }
+        });
+    }
 
+    private int getPrice(String p) {
+        return Integer.parseInt(p.substring(p.indexOf("￥") + 1));
+    }
 
-     class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.imageGoods)
         ImageView imageGoods;
         @BindView(R.id.texttitle)
@@ -154,7 +174,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-     class FooterHolder extends RecyclerView.ViewHolder {
+    class FooterHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textfooter)
         TextView textviewfooter;
 

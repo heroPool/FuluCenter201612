@@ -7,6 +7,7 @@
     tools:context="com.example.administrator.fulishe201612.ui.activity.BoutiqueAndListActivity">
 
     <RelativeLayout
+        android:id="@+id/layout_Title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="#ff8d1e">
@@ -21,12 +22,26 @@
             android:src="@drawable/back" />
 
         <TextView
+            android:id="@+id/textTitleFenlei"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:drawableEnd="@mipmap/arrow2_down"
+            android:drawablePadding="6dp"
+            android:onClick="onClick"
+            android:text="分类"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+        <TextView
             android:id="@+id/textTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/imageback"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@+id/imageback"
             android:maxLength="15"
             android:text="商品"
             android:textColor="#fff"
@@ -42,25 +57,28 @@
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <CheckBox
+        <Button
             android:id="@+id/priceSort"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:drawableRight="@drawable/arrow_order_up"
             android:text="价格" />
 
-        <CheckBox
+        <Button
             android:id="@+id/timeSort"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:drawableRight="@drawable/arrow_order_up"
             android:text="时间" />
     </LinearLayout>
 
     <TextView
 
         android:layout_width="match_parent"
-        android:layout_height="4dp" />
+        android:layout_height="2dp" />
 
     <FrameLayout
         android:id="@+id/fragment_cantai"

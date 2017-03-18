@@ -57,6 +57,9 @@ public class Xinpin extends Fragment {
     int pageId = 1;
     int cat_id;
 
+    public RecyclerViewAdapter getRecyclerViewAdapter() {
+        return recyclerViewAdapter;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

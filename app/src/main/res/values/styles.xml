@@ -4,7 +4,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:statusBarColor">@android:color/transparent</item>
+
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -17,7 +17,12 @@
         <item name="android:windowAnimationStyle">@style/AnimFade2</item>
     </style>
 
+    <style name="GoodsDetialsTheme" parent="AppTheme">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
     <style name="AppTheme.TransparentActivity">
+
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
@@ -78,6 +83,7 @@
         <item name="android:background">@drawable/setting_item_selector</item>
         <item name="android:drawablePadding">10dp</item>
     </style>
+
     <style name="list_txt_Style_without_nopadding">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">45dp</item>
@@ -88,6 +94,7 @@
         <item name="android:focusable">false</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
     <style name="list_txt_Style_without_nopadding_right">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">45dp</item>
@@ -112,6 +119,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="MMListItem">
         <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
@@ -120,6 +128,7 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="MMFontTitleInList">
         <item name="android:textSize">16.0dip</item>
         <item name="android:textColor">#ff595c61</item>
@@ -129,10 +138,12 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:singleLine">true</item>
     </style>
+
     <style name="AnimHead" parent="@android:style/Animation">
         <item name="android:windowEnterAnimation">@anim/head_in</item>
         <item name="android:windowExitAnimation">@anim/head_out</item>
     </style>
+
     <style name="txt_ContextStyle1">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

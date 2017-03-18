@@ -224,7 +224,9 @@ public class ImageLoader {
                 Bitmap bitmap = BitmapUtils.getBitmap(response.body().bytes(), mBean.width, mBean.height);
                 if (bitmap != null) {
                     mBean.bitmap = bitmap;
-                    mCaches.put(mBean.url, mBean.bitmap);
+                    if (mCaches != null) {
+                        mCaches.put(mBean.url, mBean.bitmap);
+                    }
                     if (mBean.saveFileName != null) {
                         BitmapUtils.saveBitmap(mBean.bitmap, FileUtils.getDir(context, mBean.saveFileName));
                     }

@@ -112,14 +112,21 @@ public class Fenlei extends Fragment {
         expandableListView = (ExpandableListView) inflate.findViewById(R.id.expandableListView);
         expandableAdapter = new ExpandableAdapter(getActivity(), categoryGroupBeen, categoryChildBeen);
         expandableListView.setAdapter(expandableAdapter);
-
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
+
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                ArrayList<CategoryChildBean> categoryChildBeen = Fenlei.this.categoryChildBeen.get(groupPosition);
+                String groupItem = categoryGroupBeen.get(groupPosition).getName();
+
+                Log.i("popu", "bfore:" + categoryChildBeen.toString());
                 startActivity(new Intent(getActivity(), BoutiqueAndListActivity.class)
-                        .putExtra("title", categoryChildBeen.get(groupPosition).get(childPosition).getName())
-                        .putExtra(I.NewAndBoutiqueGoods.CAT_ID, categoryChildBeen.get(groupPosition).get(childPosition).getId())
+
+                        .putExtra("title", Fenlei.this.categoryChildBeen.get(groupPosition).get(childPosition).getName())
+                        .putExtra(I.NewAndBoutiqueGoods.CAT_ID, Fenlei.this.categoryChildBeen.get(groupPosition).get(childPosition).getId())
                         .putExtra("boolea", "1")
+                        .putExtra("childList", categoryChildBeen)
+                        .putExtra("groupItem", groupItem)
                 );
 
                 return false;

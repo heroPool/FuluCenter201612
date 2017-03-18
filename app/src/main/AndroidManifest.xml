@@ -23,8 +23,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.BoutiqueAndListActivity" />
-        <activity android:name=".ui.activity.GoodsDetialsActivtiy"
-            android:label=""></activity>
+        <activity
+            android:name=".ui.activity.GoodsDetialsActivtiy"
+            android:label=""
+            android:theme="@style/GoodsDetialsTheme" />
+
+
     </application>
 
 </manifest>
