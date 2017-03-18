@@ -1,12 +1,13 @@
 package com.example.administrator.fulishe201612.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -106,7 +107,8 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
         popuwindowAdapter = new PopuwindowListaAdapter(this, categoryChildBeen);
         View layout = View.inflate(this, R.layout.popu_window, null);
 
-        popupWindow = new PopupWindow(layout, 900, 1500);
+        popupWindow = new PopupWindow(layout, 700, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         popupWindow.setFocusable(true);
         popupWindow.setTouchable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -127,16 +129,21 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
                 int cat_id = categoryChildBeen.get(position).getId();
                 xinpin.setCat_id(cat_id);
 
+                progressDialog = new ProgressDialog(BoutiqueAndListActivity.this);
+                progressDialog.setMessage("loading...");
+                progressDialog.show();
+                progressDialog.setCanceledOnTouchOutside(false);
                 downLoadContactList(cat_id);
                 popupWindow.dismiss();
-
+                textTitle.setText(categoryChildBeen.get(position).getName());
             }
         });
     }
-
+    ProgressDialog progressDialog;
     private void downLoadContactList(int cat_id) {
         INewGoodsModel iNewGoodsModel = new FindGoodsDetails();
         final OkHttpUtils<NewGoodsBean[]> okHttpUtils = new OkHttpUtils<>(this);
@@ -148,13 +155,11 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
 
                 ImageLoader.release();
                 xinpin.getRecyclerViewAdapter().initContact(newGoodsBeen);
-
-
+                progressDialog.dismiss();
             }
-
             @Override
             public void onError(String error) {
-                Toast.makeText(BoutiqueAndListActivity.this, "请求失败" + error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BoutiqueAndListActivity.this, "请求失败!:" + error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

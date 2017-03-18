@@ -44,9 +44,9 @@ public class PopuwindowListaAdapter extends BaseAdapter {
         ViewHolder holder = null;
         if (convertView == null) {//整理创建第一屏的列表项
             holder = new ViewHolder();
-            convertView = View.inflate(context, R.layout.item_child, null);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.imageChild);
-            holder.textView = (TextView) convertView.findViewById(R.id.textChildName);
+            convertView = View.inflate(context, R.layout.popular_item, null);
+            holder.imageView = (ImageView) convertView.findViewById(R.id.imagepopu_Child);
+            holder.textView = (TextView) convertView.findViewById(R.id.textpopiu_ChildName);
 
             convertView.setTag(holder);
         } else {

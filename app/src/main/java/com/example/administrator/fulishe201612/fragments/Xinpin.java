@@ -99,6 +99,7 @@ public class Xinpin extends Fragment {
             @Override
             public void onRefresh() {
                 swiperefresh.setRefreshing(true);
+
                 textHint.setVisibility(View.VISIBLE);
                 pageId = 1;
                 downLoadContactList(ACTION_PULL_DOWN, pageId);
