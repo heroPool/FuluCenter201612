@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +24,12 @@ import com.example.administrator.fulishe201612.adapter.PopuwindowListaAdapter;
 import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.fragments.Xinpin;
 import com.example.administrator.fulishe201612.model.bean.CategoryChildBean;
+import com.example.administrator.fulishe201612.model.bean.NewGoodsBean;
+import com.example.administrator.fulishe201612.model.net.FindGoodsDetails;
+import com.example.administrator.fulishe201612.model.net.INewGoodsModel;
+import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
+import com.example.administrator.fulishe201612.model.utils.ImageLoader;
+import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,6 +56,7 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
     Button timeSort;
 
     Xinpin xinpin;
+
     @BindView(R.id.textTitleFenlei)
     TextView textTitleFenlei;
     ListView listView;
@@ -116,8 +124,42 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
         listView = (ListView) layout.findViewById(R.id.popWindow_list);
         Log.i("popu", categoryChildBeen.toString());
         listView.setAdapter(popuwindowAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int cat_id = categoryChildBeen.get(position).getId();
+                xinpin.setCat_id(cat_id);
+
+                downLoadContactList(cat_id);
+                popupWindow.dismiss();
+
+            }
+        });
     }
 
+    private void downLoadContactList(int cat_id) {
+        INewGoodsModel iNewGoodsModel = new FindGoodsDetails();
+        final OkHttpUtils<NewGoodsBean[]> okHttpUtils = new OkHttpUtils<>(this);
+
+        iNewGoodsModel.loadData(this, cat_id, 1, new OnCompleteListener<NewGoodsBean[]>() {
+            @Override
+            public void onSuccess(NewGoodsBean[] result) {
+                ArrayList<NewGoodsBean> newGoodsBeen = okHttpUtils.array2List(result);
+
+                ImageLoader.release();
+                xinpin.getRecyclerViewAdapter().initContact(newGoodsBeen);
+
+
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(BoutiqueAndListActivity.this, "请求失败" + error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
 
     int sortBy;
     boolean sortPrice = false;

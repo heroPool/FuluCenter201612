@@ -52,11 +52,10 @@ public class PopuwindowListaAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-
         holder.textView.setText(app.getName());
         ImageLoader.downloadImg(context, holder.imageView, app.getImageUrl());
         return convertView;
+
     }
 
     class ViewHolder {

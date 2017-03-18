@@ -61,6 +61,10 @@ public class Xinpin extends Fragment {
         return recyclerViewAdapter;
     }
 
+    public void setCat_id(int cat_id) {
+        this.cat_id = cat_id;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,7 +76,7 @@ public class Xinpin extends Fragment {
 
         String boolea = getActivity().getIntent().getStringExtra("boolea");
 
-        if (boolea!=null) {
+        if (boolea != null) {
             iNewGoodsModel = new FindGoodsDetails();
         } else {
             iNewGoodsModel = new NewGoodsModel();
