@@ -43,12 +43,13 @@ public class GoodsDetialsActivtiy extends AppCompatActivity {
     WebView webView;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Unbinder bind;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_detials_activtiy);
-       bind = ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        bind = ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -132,6 +133,7 @@ public class GoodsDetialsActivtiy extends AppCompatActivity {
     protected void onDestroy() {
 
 
-        super.onDestroy(); bind.unbind();
+        super.onDestroy();
+        bind.unbind();
     }
 }

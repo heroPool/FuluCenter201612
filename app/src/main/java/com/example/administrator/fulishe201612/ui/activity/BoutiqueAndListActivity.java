@@ -2,16 +2,21 @@ package com.example.administrator.fulishe201612.ui.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,6 +39,7 @@ import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,7 +66,7 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
 
     @BindView(R.id.textTitleFenlei)
     TextView textTitleFenlei;
-    ListView listView;
+    GridView GridView;
     PopupWindow popupWindow;
 
     PopuwindowListaAdapter popuwindowAdapter;
@@ -106,12 +112,14 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
 
         popuwindowAdapter = new PopuwindowListaAdapter(this, categoryChildBeen);
         View layout = View.inflate(this, R.layout.popu_window, null);
+//        LayoutInflater from = getLayoutInflater().from(this);
+//        View inflate = from.inflate(R.layout.popu_window, null);
 
-        popupWindow = new PopupWindow(layout, 700, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow = new PopupWindow(layout, 900, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         popupWindow.setFocusable(true);
         popupWindow.setTouchable(true);
-        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#e0f1f1f1")));
         popupWindow.setOutsideTouchable(true);
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -123,10 +131,13 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
                 textTitleFenlei.setCompoundDrawables(null, null, drawable, null);
             }
         });
-        listView = (ListView) layout.findViewById(R.id.popWindow_list);
+        GridView = (GridView) layout.findViewById(R.id.popWindow_list);
         Log.i("popu", categoryChildBeen.toString());
-        listView.setAdapter(popuwindowAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        GridView.setNumColumns(2);
+
+        GridView.setAdapter(popuwindowAdapter);
+
+        GridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -135,15 +146,17 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
 
                 progressDialog = new ProgressDialog(BoutiqueAndListActivity.this);
                 progressDialog.setMessage("loading...");
-                progressDialog.show();
                 progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
                 downLoadContactList(cat_id);
                 popupWindow.dismiss();
                 textTitle.setText(categoryChildBeen.get(position).getName());
             }
         });
     }
+
     ProgressDialog progressDialog;
+
     private void downLoadContactList(int cat_id) {
         INewGoodsModel iNewGoodsModel = new FindGoodsDetails();
         final OkHttpUtils<NewGoodsBean[]> okHttpUtils = new OkHttpUtils<>(this);
@@ -157,6 +170,7 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
                 xinpin.getRecyclerViewAdapter().initContact(newGoodsBeen);
                 progressDialog.dismiss();
             }
+
             @Override
             public void onError(String error) {
                 Toast.makeText(BoutiqueAndListActivity.this, "请求失败!:" + error.toString(), Toast.LENGTH_SHORT).show();
@@ -209,7 +223,7 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
                 Log.i("popu", "执行");
                 popupWindow.showAsDropDown(layoutTitle, layoutTitle.getWidth() - popupWindow.getWidth(), 0);
                 if (popupWindow.isShowing()) {
-                    Drawable drawable = getResources().getDrawable(R.drawable.arrow2_up);
+                    Drawable drawable = ContextCompat.getDrawable(this, R.drawable.arrow2_up);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                     textTitleFenlei.setCompoundDrawables(null, null, drawable, null);
                 }
@@ -221,6 +235,9 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
     private void setSortBy(int sortBy) {
 
         xinpin.getRecyclerViewAdapter().setSortBy(sortBy);
+        GridView gridView = new GridView(this);
+
+
     }
 
     @Override

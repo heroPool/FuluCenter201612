@@ -5,7 +5,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
 
-
+        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="colorPrimary">@color/tab_bg</item>
         <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <item name="colorAccent">@color/colorAccent</item>
@@ -13,8 +13,9 @@
         <!--<item name="windowActionBar">false</item>-->
         <!--<item name="windowActionModeOverlay">true</item>-->
         <!--<item name="windowNoTitle">true</item>-->
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@style/AnimFade2</item>
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowAnimationStyle">@style/AnimFade2</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
     </style>
 
     <style name="GoodsDetialsTheme" parent="AppTheme">

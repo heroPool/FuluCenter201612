@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
@@ -17,13 +18,12 @@
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ff8d1e"
-            android:fitsSystemWindows="true"
 
+            android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:contentScrim="?attr/colorPrimary"
-
+            app:expandedTitleGravity="center_horizontal|bottom"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -31,16 +31,20 @@
                 android:id="@+id/layoutImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fitsSystemWindows="true">
+                android:background="#ff8d1e"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.5">
 
-                <ImageView
+                <com.example.administrator.fulishe201612.ui.activity.CircleImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="40dp"
-                    android:src="@drawable/contactlogo"
-
-                    app:layout_collapseMode="parallax" />
+                    android:fitsSystemWindows="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="30dp"
+                    android:src="@mipmap/logo_uidemo"
+                    app:civ_border_color="#ffffff"
+                    app:civ_border_width="2dp" />
             </RelativeLayout>
 
             <android.support.v7.widget.Toolbar
@@ -48,9 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:title="你bu好啊 ">
-
-            </android.support.v7.widget.Toolbar>
+                app:title="恩保护你" />
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
@@ -65,6 +67,90 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp">
+
+                <LinearLayout
+                    android:id="@+id/layout_center_collect"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_collect_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="收藏的宝贝" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="28" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="收藏的店铺" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="58" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:text="我的足迹" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,7 +170,7 @@
                         android:layout_marginStart="20dp"
                         android:gravity="center"
                         android:text="我的订单"
-                        android:textSize="18sp"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -158,22 +244,22 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
 
                 <RelativeLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
                     android:background="#fff">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="15dp"
                         android:gravity="center"
-                        android:text="我的订单"
-                        android:textSize="18sp"
+                        android:text="我的卡卷包"
+                        android:textSize="15sp"
                         android:textStyle="bold" />
 
                     <ImageView
@@ -184,14 +270,123 @@
                         android:layout_marginEnd="20dp"
                         android:src="@drawable/right_arrow_icon" />
 
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#fff">
+
+                    <ImageView
+                        android:id="@+id/image_caou1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:src="@drawable/center_card_coupon1" />
+
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="10dp"
 
-                        android:text="查看全部宝贝"
-                        android:textSize="16sp" />
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_toEndOf="@id/image_caou1"
+                        android:gravity="center"
+                        android:text="生活卷"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp"
+                        android:src="@drawable/right_arrow_icon" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#fff">
+
+                    <ImageView
+                        android:id="@+id/image_caou2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:src="@drawable/center_card_coupon2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_toEndOf="@id/image_caou2"
+                        android:gravity="center"
+                        android:text="网店卷"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp"
+                        android:src="@drawable/right_arrow_icon" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#fff">
+
+                    <ImageView
+                        android:id="@+id/image_caou3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:src="@drawable/center_card_coupon3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_toEndOf="@id/image_caou3"
+                        android:gravity="center"
+                        android:text="会员卡"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp"
+                        android:src="@drawable/right_arrow_icon" />
+
 
                 </RelativeLayout>
             </LinearLayout>

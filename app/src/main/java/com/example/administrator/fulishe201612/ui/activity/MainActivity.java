@@ -1,15 +1,23 @@
 package com.example.administrator.fulishe201612.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RadioButton;
 
 import com.example.administrator.fulishe201612.R;
+import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
+import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.fragments.Fenlei;
 import com.example.administrator.fulishe201612.fragments.Gouwuche;
 import com.example.administrator.fulishe201612.fragments.Jingxuan;
@@ -52,13 +60,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    Wo wo;
+
     private void initView() {
         mFragments = new Fragment[5];
         mFragments[0] = new Xinpin();
         mFragments[1] = new Jingxuan();
         mFragments[2] = new Fenlei();
         mFragments[3] = new Gouwuche();
-        mFragments[4] = new Wo();
+        wo = new Wo();
+        mFragments[4] = wo;
+
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mFragments);
         viewPager.setAdapter(viewPagerAdapter);
     }
@@ -88,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case 0:
                         btnXinpin.setChecked(true);
                         viewPager.setCurrentItem(0);
-                        break;
 
+                        break;
                     case 1:
                         btnJingxuan.setChecked(true);
                         viewPager.setCurrentItem(1);
@@ -99,12 +111,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         viewPager.setCurrentItem(2);
                         break;
                     case 3:
+                        if (FuLiCenterApplication.getUser() == null) {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivityForResult(intent, I.REQUEST_CODE_LOGIN_FROM_CART);
+
+                        }
                         btnGouwuche.setChecked(true);
                         viewPager.setCurrentItem(3);
                         break;
                     case 4:
+                        if (FuLiCenterApplication.getUser() == null) {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivityForResult(intent, I.REQUEST_CODE_LOGIN);
+                        }
                         btnGeren.setChecked(true);
                         viewPager.setCurrentItem(4);
+
                         break;
                 }
             }
@@ -123,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.btnXinpin:
                 viewPager.setCurrentItem(0);
-
                 break;
             case R.id.btnJingxuan:
                 viewPager.setCurrentItem(1);
@@ -133,12 +154,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnGouwuche:
                 viewPager.setCurrentItem(3);
+
                 break;
             case R.id.btnGeren:
+
                 viewPager.setCurrentItem(4);
                 break;
         }
     }
+
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -166,10 +190,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_persionlcenter, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (FuLiCenterApplication.getUser() != null) {
+            if (requestCode == I.REQUEST_CODE_LOGIN) {
+                btnGeren.setChecked(true);
+                viewPager.setCurrentItem(4);
+            }
+            if (requestCode == I.REQUEST_CODE_LOGIN_FROM_CART) {
+                btnGouwuche.setChecked(true);
+
+                viewPager.setCurrentItem(3);
+            }
+        }
+    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         bind.unbind();
     }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        if(index == 4 && FuLiCenterApplication.getUser()==null){
+//            index = 0;
+//        }
+//        setFragment();
+//    }
 }

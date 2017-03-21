@@ -299,7 +299,7 @@ public interface I {
     int MSG_CONNECTION_FAIL=  901;//连接服务器失败
     int MSG_UPLOAD_AVATAR_SUCCESS=902;//上传头像成功
     int MSG_UPLOAD_AVATAR_FAIL=903;//上传头像失败
-    int MSG_REGISTER_SUCCESS=  101;//注册成功
+    int MSG_REGISTER_SUCCESS=  0;//注册成功
     int MSG_REGISTER_USERNAME_EXISTS=102;//账号已经存在
     int MSG_REGISTER_UPLOAD_AVATAR_FAIL=103;//上传头像失败
     int MSG_REGISTER_UPLOAD_AVATAR_SUCCESS=104;//上传头像成功

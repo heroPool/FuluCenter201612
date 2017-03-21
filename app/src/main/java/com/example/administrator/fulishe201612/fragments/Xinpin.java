@@ -31,6 +31,8 @@ import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -175,15 +177,17 @@ public class Xinpin extends Fragment {
 
                         break;
                     case ACTION_PULL_UP:
+
                         recyclerViewAdapter.addAllContact(newGoodsBeen);
+                        Log.d(TAG, "onSuccess: ");
+
                         break;
                 }
             }
 
             @Override
             public void onError(String error) {
-
-                Toast.makeText(getActivity(), "失败" + error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "请求失败：" + error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
