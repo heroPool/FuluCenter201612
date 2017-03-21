@@ -81,8 +81,6 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_boutique_and_list);
         bind = ButterKnife.bind(this);
         Intent intent = getIntent();
-
-
         title = intent.getStringExtra("title");
         listid = intent.getIntExtra(I.NewAndBoutiqueGoods.CAT_ID, 0);
         String boolea = intent.getStringExtra("boolea");
@@ -92,10 +90,13 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
 
         if (boolea != null) {
             categoryChildBeen = (ArrayList<CategoryChildBean>) childList;
+            Log.i("main", "categoryChildBeen:" + categoryChildBeen.toString());
             String groupItem = intent.getStringExtra("groupItem");
             layoutSort.setVisibility(View.VISIBLE);
-            textTitleFenlei.setVisibility(View.VISIBLE);
+
             textTitleFenlei.setText(groupItem);
+            textTitleFenlei.setVisibility(View.VISIBLE);
+            initPopuWindow();
         }
         xinpin = new Xinpin();
         textTitle.setText(this.title);
@@ -105,7 +106,7 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_cantai,
                 xinpin).commit();
 
-        initPopuWindow();
+
     }
 
     private void initPopuWindow() {
@@ -132,7 +133,7 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
             }
         });
         GridView = (GridView) layout.findViewById(R.id.popWindow_list);
-        Log.i("popu", categoryChildBeen.toString());
+
         GridView.setNumColumns(2);
 
         GridView.setAdapter(popuwindowAdapter);
