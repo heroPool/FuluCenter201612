@@ -72,7 +72,7 @@ public class CollectrecyclerViewAdapter extends RecyclerView.Adapter implements 
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (getItemViewType(position) == TYPE_FOOTER) {
             ViewHolderFooter footerHolder = (ViewHolderFooter) holder;
             footerHolder.textfooter.setText(textFooter);
@@ -94,7 +94,10 @@ public class CollectrecyclerViewAdapter extends RecyclerView.Adapter implements 
                     @Override
                     public void onSuccess(MessageBean result) {
                         if (result != null && result.isSuccess()) {
+                            collectBeanArrayList.remove(position);
+                            notifyDataSetChanged();
 
+//                            notifyItemRemoved(position);
                         }
                     }
 
@@ -161,6 +164,7 @@ public class CollectrecyclerViewAdapter extends RecyclerView.Adapter implements 
             ButterKnife.bind(this, view);
         }
     }
+
 
     class ViewHolderFooter extends RecyclerView.ViewHolder {
 
