@@ -98,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initView();
         initData();
@@ -111,6 +111,7 @@ public class SettingsActivity extends AppCompatActivity {
         initData();
 
     }
+
 
     private void initView() {
         if (toolbar != null) {

@@ -6,16 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
@@ -25,6 +21,7 @@ import com.example.administrator.fulishe201612.fragments.Gouwuche;
 import com.example.administrator.fulishe201612.fragments.Jingxuan;
 import com.example.administrator.fulishe201612.fragments.Wo;
 import com.example.administrator.fulishe201612.fragments.Xinpin;
+import com.example.administrator.fulishe201612.model.utils.ShowToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -106,7 +103,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.erweima:
-                Toast.makeText(this, "点击二维码", Toast.LENGTH_SHORT).show();
+//                if (FuLiCenterApplication.getInstance().getUtil().check()) break;
+                Log.i(TAG, "点击次数：" + 1);
+                ShowToastUtils.showToast(this, "点击二维码");
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -233,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == I.REQUEST_CODE_LOGIN) {
                 btnGeren.setChecked(true);
                 viewPager.setCurrentItem(4);

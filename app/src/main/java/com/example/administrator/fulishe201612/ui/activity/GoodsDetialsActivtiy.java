@@ -6,9 +6,11 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -24,6 +26,8 @@ import com.example.administrator.fulishe201612.model.net.IGoodsDetialsModel;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
 import com.example.administrator.fulishe201612.ui.view.FlowIndicator;
 import com.example.administrator.fulishe201612.ui.view.SlideAutoLoopView;
+
+import java.lang.reflect.Method;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,13 +74,12 @@ public class GoodsDetialsActivtiy extends AppCompatActivity {
         if (goodsId == 0) {
             finish();
             return;
-
         }
         iGoodsDetial = new GoodsDetialsModel();
         initData();
     }
 
-    MenuItem item;
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -85,17 +88,18 @@ public class GoodsDetialsActivtiy extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.menu_isCollect:
-
-                this.item = item;
+//                this.item = item;       //添加item实例
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
-
+    MenuItem item;
+    Menu menu;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_detials, menu);
+        this.menu = menu;
+        item = menu.getItem(0);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -120,7 +124,20 @@ public class GoodsDetialsActivtiy extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+        if (menu != null) {
+            if (menu.getClass() == MenuBuilder.class) {
+                try {
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e) {
+                }
+            }
+        }
+        return super.onPrepareOptionsPanel(view, menu);
+    }
     private void showImageConllect(MessageBean result) {
         if (result.isSuccess()) {
             Drawable drawable = ContextCompat.getDrawable(this, R.mipmap.bg_collect_out);

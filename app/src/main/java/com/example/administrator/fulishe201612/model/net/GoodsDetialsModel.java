@@ -25,7 +25,7 @@ public class GoodsDetialsModel implements IGoodsDetialsModel {
     public void isCollect(Context context, String username, int goodsId, OnCompleteListener<MessageBean> listener) {
         OkHttpUtils<MessageBean> okHttpUtils = new OkHttpUtils<>(context);
         okHttpUtils.setRequestUrl(I.REQUEST_IS_COLLECT)
-                .addParam(I.User.USER_NAME, username)
+                .addParam(I.Collect.USER_NAME, username)
                 .addParam(I.Goods.KEY_GOODS_ID, goodsId + "")
                 .targetClass(MessageBean.class)
                 .execute(listener);

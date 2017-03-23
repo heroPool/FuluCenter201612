@@ -38,7 +38,7 @@ public class UserModel implements IUserModel {
 
     @Override
     public void updateNick(Context context, String username, String newnick, OnCompleteListener<String> listener) {
-        OkHttpUtils<String> okhttputils= new OkHttpUtils<>(context);
+        OkHttpUtils<String> okhttputils = new OkHttpUtils<>(context);
         okhttputils.setRequestUrl(I.REQUEST_UPDATE_USER_NICK)
                 .addParam(I.User.USER_NAME, username)
                 .addParam(I.User.NICK, newnick)
@@ -63,7 +63,7 @@ public class UserModel implements IUserModel {
     public void isCollectGoods(Context context, String username, OnCompleteListener<MessageBean> listener) {
         OkHttpUtils<MessageBean> okHttp = new OkHttpUtils<>(context);
         okHttp.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
-                .addParam(I.User.USER_NAME, username)
+                .addParam(I.Collect.USER_NAME, username)
                 .targetClass(MessageBean.class)
                 .execute(listener);
     }

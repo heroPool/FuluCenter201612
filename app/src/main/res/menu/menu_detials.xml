@@ -4,7 +4,6 @@
 
     <item
         android:id="@+id/menu_isCollect"
-
         android:icon="@mipmap/bg_collect_in"
         android:title="收藏"
         app:showAsAction="always" />
@@ -12,5 +11,5 @@
         android:id="@+id/menu_share"
         android:icon="@mipmap/bg_share_nor"
         android:title="分享"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 </menu>

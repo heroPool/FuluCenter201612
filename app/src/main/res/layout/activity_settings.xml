@@ -11,8 +11,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/layout_line2" />
+        android:background="#ff5102"
+        app:title="设置"
+        app:titleTextColor="#fff" />
 
     <RelativeLayout
         android:id="@+id/layout_Username"
@@ -120,9 +121,8 @@
         android:id="@+id/layout_myAvatar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/layout_Username"
+        android:layout_below="@+id/layout_line"
         android:background="#fff"
         app:layout_constraintBottom_toTopOf="@+id/layout_Username"
         app:layout_constraintLeft_toLeftOf="parent"

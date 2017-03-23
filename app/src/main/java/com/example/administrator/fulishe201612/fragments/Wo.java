@@ -7,6 +7,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,6 +129,8 @@ public class Wo extends Fragment {
         showInfo();
     }
 
+    private static final String TAG = "Wo";
+
     private void showInfo() {
 
         user = FuLiCenterApplication.getUser();
@@ -137,7 +140,9 @@ public class Wo extends Fragment {
             userModel.isCollectGoods(getContext(), user.getMuserName(), new OnCompleteListener<MessageBean>() {
                 @Override
                 public void onSuccess(MessageBean result) {
+                    Log.i(TAG, result.getMsg());
                     if (result != null && result.isSuccess()) {
+
                         textShoucangbaobeiNum.setText(result.getMsg());
                     }
                 }

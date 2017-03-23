@@ -1,9 +1,9 @@
 package com.example.administrator.fulishe201612.application;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.example.administrator.fulishe201612.model.bean.User;
+import com.example.administrator.fulishe201612.model.utils.AntiShake;
 
 /**
  * Created by Administrator on 2017/3/14.
@@ -11,6 +11,11 @@ import com.example.administrator.fulishe201612.model.bean.User;
 
 public class FuLiCenterApplication extends Application {
 
+    AntiShake util = new AntiShake();
+
+    public  AntiShake getUtil() {
+        return util;
+    }
 
     private static FuLiCenterApplication instance;
 
