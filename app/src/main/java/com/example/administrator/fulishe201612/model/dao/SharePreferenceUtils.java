@@ -17,6 +17,8 @@ public class SharePreferenceUtils {
     SharedPreferences.Editor editor;
 
     public SharePreferenceUtils() {
+
+
         sharedPreferences = FuLiCenterApplication.getInstance().getSharedPreferences(SHAREPREFERENCE_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }

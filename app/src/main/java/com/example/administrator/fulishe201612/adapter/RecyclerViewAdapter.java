@@ -68,7 +68,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         View inflate = View.inflate(context, R.layout.xinpin_detailinfo, null);
         return new ViewHolder(inflate);
     }
-
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == TYPE_FOOTER) {

@@ -32,7 +32,9 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <activity android:name=".ui.activity.RegisterActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
-        <activity android:name=".ui.activity.CollectionActivity" />
+        <activity android:name=".ui.activity.CollectionActivity"
+            android:theme="@style/AppTheme"/>
+
         <activity android:name=".ui.activity.UpdateNickActivity"/>
         <activity android:name=".ui.utils.ClipImageActivity" />
     </application>

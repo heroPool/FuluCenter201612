@@ -107,7 +107,7 @@ public class User {
         sb.append(I.NAME_OR_HXID).append(I.EQUAL).append(this.getMuserName()).append(I.AND)
                 .append(I.AVATAR_TYPE).append(I.EQUAL).append(this.getMavatarPath()).append(I.AND)
                 .append(I.AVATAR_SUFFIX).append(I.EQUAL).append(this.getMavatarSuffix()).append(I.AND)
-                .append("&width=80&height=80");
+                .append("&width=200&height=200");
         return sb.toString();
     }
 

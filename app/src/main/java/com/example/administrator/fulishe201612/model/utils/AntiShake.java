@@ -29,4 +29,5 @@ public class AntiShake {
     public boolean check() {
         return check(null);
     }
+
 }

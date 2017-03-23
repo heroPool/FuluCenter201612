@@ -23,6 +23,7 @@ import com.example.administrator.fulishe201612.model.bean.User;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
 import com.example.administrator.fulishe201612.model.net.UserModel;
 import com.example.administrator.fulishe201612.model.utils.ImageLoader;
+import com.example.administrator.fulishe201612.ui.activity.CollectionActivity;
 import com.example.administrator.fulishe201612.ui.activity.SettingsActivity;
 import com.example.administrator.fulishe201612.ui.view.CircleImageView;
 
@@ -96,7 +97,13 @@ public class Wo extends Fragment {
 
 
     private void setListener() {
-
+        layoutCenterCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CollectionActivity.class);
+                startActivity(intent);
+            }
+        });
         imageAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

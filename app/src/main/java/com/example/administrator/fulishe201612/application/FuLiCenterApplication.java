@@ -13,14 +13,11 @@ public class FuLiCenterApplication extends Application {
 
     AntiShake util = new AntiShake();
 
-    public  AntiShake getUtil() {
+    public AntiShake getUtil() {
         return util;
     }
 
     private static FuLiCenterApplication instance;
-
-
-    private static User user;
 
     public static FuLiCenterApplication getInstance() {
         if (instance == null) {
@@ -29,6 +26,15 @@ public class FuLiCenterApplication extends Application {
         return instance;
     }
 
+    @Override
+    public void onCreate() {
+
+
+        super.onCreate();
+        instance = this;
+    }
+
+    private static User user;
 
     public static User getUser() {
         return user;
@@ -37,14 +43,4 @@ public class FuLiCenterApplication extends Application {
     public static void setUser(User user) {
         FuLiCenterApplication.user = user;
     }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-
-        instance = this;
-    }
-
-
 }

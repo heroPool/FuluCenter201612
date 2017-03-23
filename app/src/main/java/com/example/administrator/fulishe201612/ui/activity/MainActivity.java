@@ -100,10 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.message:
 
-
                 break;
             case R.id.erweima:
-//                if (FuLiCenterApplication.getInstance().getUtil().check()) break;
+                if (FuLiCenterApplication.getInstance().getUtil().check()) break;
                 Log.i(TAG, "点击次数：" + 1);
                 ShowToastUtils.showToast(this, "点击二维码");
                 break;

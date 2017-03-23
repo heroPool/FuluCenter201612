@@ -3,7 +3,6 @@ package com.example.administrator.fulishe201612.model.dao;
 import android.content.Context;
 
 import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
-import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.User;
 
 /**
