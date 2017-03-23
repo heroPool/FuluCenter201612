@@ -121,7 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        User user = FuLiCenterApplication.getUser();
+        user = FuLiCenterApplication.getUser();
         if (user != null) {
             showInfo(user);
         }
@@ -142,7 +142,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void showInfo(User user) {
         textSettingUsername.setText(user.getMuserName());
         textSettingNick.setText(user.getMuserNick());
-        ImageLoader.downloadImg(this, imageView2, user.getAvatar());
+        ImageLoader.setAvatar(user.getAvatar(), this, imageView2);
 
     }
 

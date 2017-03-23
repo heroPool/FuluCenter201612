@@ -3,7 +3,7 @@ package com.example.administrator.fulishe201612.model.net;
 import android.content.Context;
 
 import com.example.administrator.fulishe201612.application.I;
-import com.example.administrator.fulishe201612.model.bean.NewGoodsBean;
+import com.example.administrator.fulishe201612.model.bean.MessageBean;
 import com.example.administrator.fulishe201612.model.bean.Result;
 import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
 
@@ -56,6 +56,15 @@ public class UserModel implements IUserModel {
                 .addFile2(file)
                 .targetClass(String.class)
                 .post()
+                .execute(listener);
+    }
+
+    @Override
+    public void isCollectGoods(Context context, String username, OnCompleteListener<MessageBean> listener) {
+        OkHttpUtils<MessageBean> okHttp = new OkHttpUtils<>(context);
+        okHttp.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+                .addParam(I.User.USER_NAME, username)
+                .targetClass(MessageBean.class)
                 .execute(listener);
     }
 

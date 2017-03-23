@@ -17,15 +17,19 @@ import android.widget.TextView;
 
 import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
+import com.example.administrator.fulishe201612.model.bean.MessageBean;
 import com.example.administrator.fulishe201612.model.bean.User;
+import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
+import com.example.administrator.fulishe201612.model.net.UserModel;
 import com.example.administrator.fulishe201612.model.utils.ImageLoader;
-import com.example.administrator.fulishe201612.ui.view.CircleImageView;
 import com.example.administrator.fulishe201612.ui.activity.SettingsActivity;
+import com.example.administrator.fulishe201612.ui.view.CircleImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.administrator.fulishe201612.R.id.text_shoucangbaobei_num;
 
 
 public class Wo extends Fragment {
@@ -41,7 +45,7 @@ public class Wo extends Fragment {
     RelativeLayout layoutImage;
     @BindView(R.id.appBar)
     AppBarLayout appBar;
-    @BindView(R.id.text_shoucangbaobei_num)
+    @BindView(text_shoucangbaobei_num)
     TextView textShoucangbaobeiNum;
     @BindView(R.id.layout_center_collect)
     LinearLayout layoutCenterCollect;
@@ -66,6 +70,7 @@ public class Wo extends Fragment {
 
 
     User user;
+    UserModel userModel;
 
     public Toolbar getToolbarPersion() {
         return toolbarPersion;
@@ -80,6 +85,7 @@ public class Wo extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_wo, container, false);
         ButterKnife.bind(this, view);
+        userModel = new UserModel();
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbarPersion);
         initView(view);
@@ -123,10 +129,24 @@ public class Wo extends Fragment {
     }
 
     private void showInfo() {
+
         user = FuLiCenterApplication.getUser();
         if (user != null) {
             toolbarPersion.setTitle(user.getMuserNick());
-            ImageLoader.downloadImg(getContext(), imageAvatar, user.getAvatar());
+            ImageLoader.setAvatar(user.getAvatar(), getContext(), imageAvatar);
+            userModel.isCollectGoods(getContext(), user.getMuserName(), new OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    if (result != null && result.isSuccess()) {
+                        textShoucangbaobeiNum.setText(result.getMsg());
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            });
         }
     }
 

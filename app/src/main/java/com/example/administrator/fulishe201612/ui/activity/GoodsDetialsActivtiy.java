@@ -1,7 +1,9 @@
 package com.example.administrator.fulishe201612.ui.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,9 +13,12 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.example.administrator.fulishe201612.R;
+import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
 import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.AlbumsBean;
 import com.example.administrator.fulishe201612.model.bean.GoodsDetailsBean;
+import com.example.administrator.fulishe201612.model.bean.MessageBean;
+import com.example.administrator.fulishe201612.model.bean.User;
 import com.example.administrator.fulishe201612.model.net.GoodsDetialsModel;
 import com.example.administrator.fulishe201612.model.net.IGoodsDetialsModel;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
@@ -45,13 +50,14 @@ public class GoodsDetialsActivtiy extends AppCompatActivity {
     WebView webView;
     CollapsingToolbarLayout collapsingToolbarLayout;
     Unbinder bind;
+    GoodsDetialsModel goodsDetialsModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.goods_detials_activtiy);
         bind = ButterKnife.bind(this);
-
+        goodsDetialsModel = new GoodsDetialsModel();
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -70,12 +76,18 @@ public class GoodsDetialsActivtiy extends AppCompatActivity {
         initData();
     }
 
+    MenuItem item;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.menu_isCollect:
+
+                this.item = item;
+                break;
 
         }
         return super.onOptionsItemSelected(item);
@@ -85,6 +97,36 @@ public class GoodsDetialsActivtiy extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_detials, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    User user;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        user = FuLiCenterApplication.getUser();
+        goodsDetialsModel.isCollect(this, user.getMuserName(), goodsId, new OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if (result != null && result.isSuccess()) {
+                    showImageConllect(result);
+                }
+
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+    }
+
+    private void showImageConllect(MessageBean result) {
+        if (result.isSuccess()) {
+            Drawable drawable = ContextCompat.getDrawable(this, R.mipmap.bg_collect_out);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            item.setIcon(drawable);
+        }
     }
 
     private void initData() {
