@@ -67,7 +67,7 @@ public class DBManager {
             return user;
 
         }
-        return user;
+        return null;
     }
 
     public synchronized boolean updateUser(User user) {

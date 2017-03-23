@@ -20,6 +20,7 @@ import com.example.administrator.fulishe201612.model.net.IUserModel;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
 import com.example.administrator.fulishe201612.model.net.UserModel;
 import com.example.administrator.fulishe201612.model.utils.CommonUtils;
+import com.example.administrator.fulishe201612.model.utils.MD5;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,16 +92,18 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "密码输入不一致！", Toast.LENGTH_SHORT).show();
             return;
         }
-        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.registering));
         progressDialog.show();
         register(userNick, userName, passWord);
-        progressDialog.dismiss();
+
 
     }
 
+    ProgressDialog progressDialog;
+
     private void register(String userNick, final String userName, String passWord) {
-        iUserModel.register(this, userName, userNick, passWord, new OnCompleteListener<Result>() {
+        iUserModel.register(this, userName, userNick, MD5.getMessageDigest(passWord), new OnCompleteListener<Result>() {
             @Override
             public void onSuccess(Result result) {
                 Log.i("main", result.toString());
@@ -111,11 +114,16 @@ public class RegisterActivity extends AppCompatActivity {
                         //返回数据到登录界面
                         setResult(RESULT_OK, new Intent().putExtra(I.User.USER_NAME, userName));
 //                        Snackbar.make()
+
+                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+
                         finish();
                     } else {
                         CommonUtils.showLongToast(R.string.register_fail_exists);
                         editUsername.requestFocus();
+                        progressDialog.dismiss();
                     }
+                    progressDialog.dismiss();
                 }
             }
 

@@ -32,7 +32,7 @@
                 android:fitsSystemWindows="true">
 
 
-                <com.example.administrator.fulishe201612.ui.activity.SlideAutoLoopView
+                <com.example.administrator.fulishe201612.ui.view.SlideAutoLoopView
                     android:id="@+id/slideAutoLoopView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -40,9 +40,9 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true">
 
-                </com.example.administrator.fulishe201612.ui.activity.SlideAutoLoopView>
+                </com.example.administrator.fulishe201612.ui.view.SlideAutoLoopView>
 
-                <com.example.administrator.fulishe201612.ui.activity.FlowIndicator
+                <com.example.administrator.fulishe201612.ui.view.FlowIndicator
                     android:id="@+id/flowindicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

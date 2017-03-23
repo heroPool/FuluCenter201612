@@ -17,6 +17,8 @@ import com.example.administrator.fulishe201612.model.bean.GoodsDetailsBean;
 import com.example.administrator.fulishe201612.model.net.GoodsDetialsModel;
 import com.example.administrator.fulishe201612.model.net.IGoodsDetialsModel;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
+import com.example.administrator.fulishe201612.ui.view.FlowIndicator;
+import com.example.administrator.fulishe201612.ui.view.SlideAutoLoopView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

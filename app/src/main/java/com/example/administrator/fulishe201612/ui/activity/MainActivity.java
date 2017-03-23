@@ -11,9 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
@@ -55,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bind = ButterKnife.bind(this);
         initData();
         initView();
-        setListener();
 
 
     }
@@ -73,10 +74,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), mFragments);
         viewPager.setAdapter(viewPagerAdapter);
+        setListener();
     }
 
 
     private void initData() {
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(TAG, "onCreateOptionsMenu: " + index);
+        if (index == 2) {
+            getMenuInflater().inflate(R.menu.menu_fenlei, menu);
+        }
+        if (index == 4) {
+            getMenuInflater().inflate(R.menu.menu_persionlcenter, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivityForResult(intent, 1);
+                break;
+            case R.id.message:
+
+
+                break;
+            case R.id.erweima:
+                Toast.makeText(this, "点击二维码", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
 
     }
 
@@ -138,26 +171,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    int index = 0;
 
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
             case R.id.btnXinpin:
+                index = 0;
                 viewPager.setCurrentItem(0);
                 break;
             case R.id.btnJingxuan:
+                index = 1;
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.btnFenlei:
+                index = 2;
                 viewPager.setCurrentItem(2);
                 break;
             case R.id.btnGouwuche:
+                index = 3;
                 viewPager.setCurrentItem(3);
-
                 break;
             case R.id.btnGeren:
-
+                index = 4;
                 viewPager.setCurrentItem(4);
                 break;
         }
@@ -190,32 +227,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_persionlcenter, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+
+    private static final String TAG = "MainActivity:";
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (FuLiCenterApplication.getUser() != null) {
+        if (resultCode==RESULT_OK) {
             if (requestCode == I.REQUEST_CODE_LOGIN) {
                 btnGeren.setChecked(true);
                 viewPager.setCurrentItem(4);
             }
             if (requestCode == I.REQUEST_CODE_LOGIN_FROM_CART) {
                 btnGouwuche.setChecked(true);
-
                 viewPager.setCurrentItem(3);
             }
         }
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        initView();
+        btnXinpin.setChecked(true);
+    }
+
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        bind.unbind();
+        if (bind != null) {
+            bind.unbind();
+        }
+
     }
 //    @Override
 //    protected void onResume() {

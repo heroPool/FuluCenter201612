@@ -4,6 +4,8 @@ package com.example.administrator.fulishe201612.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +22,11 @@ import com.example.administrator.fulishe201612.model.net.CateListModel;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
 import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
 import com.example.administrator.fulishe201612.ui.activity.BoutiqueAndListActivity;
-import com.example.administrator.fulishe201612.ui.activity.GoodsDetialsActivtiy;
-import com.example.administrator.fulishe201612.ui.activity.MainActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +39,8 @@ public class Fenlei extends Fragment {
 
 
     ExpandableAdapter expandableAdapter;
+    @BindView(R.id.toobar_fenlei)
+    Toolbar toobarFenlei;
 
     public Fenlei() {
 
@@ -53,11 +56,11 @@ public class Fenlei extends Fragment {
         cateListModel = new CateListModel();
         categoryGroupBeen = new ArrayList<>();
         categoryChildBeen = new ArrayList<>();
-
-
+        ButterKnife.bind(this, inflate);
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toobarFenlei);
         initData();
         initView(inflate);
-
         return inflate;
 
     }

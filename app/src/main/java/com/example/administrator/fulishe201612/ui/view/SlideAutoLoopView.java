@@ -1,4 +1,4 @@
-package com.example.administrator.fulishe201612.ui.activity;
+package com.example.administrator.fulishe201612.ui.view;
 
 import android.content.Context;
 import android.os.Handler;

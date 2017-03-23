@@ -10,11 +10,9 @@ import android.widget.TextView;
 import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.model.bean.CategoryChildBean;
 import com.example.administrator.fulishe201612.model.bean.CategoryGroupBean;
-import com.example.administrator.fulishe201612.model.bean.NewGoodsBean;
 import com.example.administrator.fulishe201612.model.utils.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 
 /**

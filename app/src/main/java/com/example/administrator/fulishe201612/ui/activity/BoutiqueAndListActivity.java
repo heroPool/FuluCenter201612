@@ -86,9 +86,11 @@ public class BoutiqueAndListActivity extends AppCompatActivity implements View.O
         String boolea = intent.getStringExtra("boolea");
 
 
-        Serializable childList = intent.getSerializableExtra("childList");
+
 
         if (boolea != null) {
+            //从分类跳过来
+            Serializable childList = intent.getSerializableExtra("childList");
             categoryChildBeen = (ArrayList<CategoryChildBean>) childList;
             Log.i("main", "categoryChildBeen:" + categoryChildBeen.toString());
             String groupItem = intent.getStringExtra("groupItem");

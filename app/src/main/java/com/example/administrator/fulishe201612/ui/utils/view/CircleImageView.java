@@ -1,5 +1,7 @@
+package com.example.administrator.fulishe201612.ui.utils.view;
+
 /*
- * Copyright 2014 - 2017 Henning Dodenhof
+ * Copyright 2014 - 2016 Henning Dodenhof
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.administrator.fulishe201612.ui.activity;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -36,6 +37,12 @@ import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+import com.example.administrator.fulishe201612.R;
+
+
+/**
+ * https://github.com/hdodenhof/CircleImageView
+ */
 public class CircleImageView extends ImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
@@ -87,13 +94,12 @@ public class CircleImageView extends ImageView {
 
     public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyle, 0);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, de.hdodenhof.circleimageview.R.styleable.CircleImageView, defStyle, 0);
-
-        mBorderWidth = a.getDimensionPixelSize(de.hdodenhof.circleimageview.R.styleable.CircleImageView_civ_border_width, DEFAULT_BORDER_WIDTH);
-        mBorderColor = a.getColor(de.hdodenhof.circleimageview.R.styleable.CircleImageView_civ_border_color, DEFAULT_BORDER_COLOR);
-        mBorderOverlay = a.getBoolean(de.hdodenhof.circleimageview.R.styleable.CircleImageView_civ_border_overlay, DEFAULT_BORDER_OVERLAY);
-        mFillColor = a.getColor(de.hdodenhof.circleimageview.R.styleable.CircleImageView_civ_fill_color, DEFAULT_FILL_COLOR);
+        mBorderWidth = a.getDimensionPixelSize(R.styleable.CircleImageView_civ_border_width, DEFAULT_BORDER_WIDTH);
+        mBorderColor = a.getColor(R.styleable.CircleImageView_civ_border_color, DEFAULT_BORDER_COLOR);
+        mBorderOverlay = a.getBoolean(R.styleable.CircleImageView_civ_border_overlay, DEFAULT_BORDER_OVERLAY);
+        mFillColor = a.getColor(R.styleable.CircleImageView_civ_fill_color, DEFAULT_FILL_COLOR);
 
         a.recycle();
 

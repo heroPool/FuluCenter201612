@@ -2,12 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/settings"
-        android:title="设置"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/message"
-        android:icon="@drawable/tb_icon_more_msg_white_56"
+        android:id="@+id/erweima"
+        android:icon="@drawable/tb_icon_home_qrcode_normal"
         android:title=""
         app:showAsAction="always" />
+
+
 </menu>

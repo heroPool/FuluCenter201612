@@ -9,8 +9,7 @@
 
         android:layout_height="match_parent"
         android:horizontalSpacing="1dp"
-        android:verticalSpacing="1dp"/>
+        android:verticalSpacing="1dp" />
 
-    
 
 </FrameLayout>

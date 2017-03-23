@@ -22,6 +22,7 @@ import com.example.administrator.fulishe201612.model.net.IUserModel;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
 import com.example.administrator.fulishe201612.model.net.UserModel;
 import com.example.administrator.fulishe201612.model.utils.CommonUtils;
+import com.example.administrator.fulishe201612.model.utils.MD5;
 import com.example.administrator.fulishe201612.model.utils.ResultUtils;
 
 import butterknife.BindView;
@@ -73,16 +74,18 @@ public class LoginActivity extends AppCompatActivity {
             editPassword.setError("密码为空");
             return;
         }
-        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.logining));
         progressDialog.show();
         login(username, password);
-        progressDialog.dismiss();
+
 
     }
 
+    ProgressDialog progressDialog;
+
     private void login(String username, String password) {
-        iUserModel.login(this, username, password, new OnCompleteListener<String>() {
+        iUserModel.login(this, username, MD5.getMessageDigest(password), new OnCompleteListener<String>() {
             @Override
             public void onSuccess(String resu) {
                 Result result = ResultUtils.getResultFromJson(resu, User.class);
@@ -92,15 +95,18 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     if (result.isRetMsg()) {
                         final User user = (User) result.getRetData();
+
                         FuLiCenterApplication.setUser(user);//将登录的用户写到application里面
+
                         SharePreferenceUtils.getinstance().setUserName(user.getMuserName());//首选项保存数据
+
                         new Thread(new Runnable() {
                             @Override
-                            public void run() {
+                            public void run() {//将数据保存到本地数据库
                                 UserDao.getInstance(LoginActivity.this).saveUser(user);
-
                             }
-                        });
+                        }).start();
+                        progressDialog.dismiss();
                         finish();
                     } else {
                         if (result.getRetCode() == I.MSG_LOGIN_UNKNOW_USER) {
@@ -111,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             CommonUtils.showLongToast(R.string.login_fail);
                         }
-
+                        progressDialog.dismiss();
                     }
                 }
             }
@@ -124,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == I.REQUEST_CODE_REGISTER) {
@@ -134,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.text_toRegister)
     public void onClick() {
+
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivityForResult(intent, I.REQUEST_CODE_REGISTER);
     }

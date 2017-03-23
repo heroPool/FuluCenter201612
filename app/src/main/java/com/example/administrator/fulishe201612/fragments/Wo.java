@@ -19,11 +19,13 @@ import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
 import com.example.administrator.fulishe201612.model.bean.User;
 import com.example.administrator.fulishe201612.model.utils.ImageLoader;
-import com.example.administrator.fulishe201612.ui.activity.CircleImageView;
-import com.example.administrator.fulishe201612.ui.activity.LoginActivity;
+import com.example.administrator.fulishe201612.ui.view.CircleImageView;
+import com.example.administrator.fulishe201612.ui.activity.SettingsActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class Wo extends Fragment {
@@ -62,6 +64,9 @@ public class Wo extends Fragment {
     @BindView(R.id.image_fukuanshouhou)
     ImageView imageFukuanshouhou;
 
+
+    User user;
+
     public Toolbar getToolbarPersion() {
         return toolbarPersion;
     }
@@ -78,25 +83,51 @@ public class Wo extends Fragment {
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbarPersion);
         initView(view);
-
+        setListener();
         return view;
     }
 
-    User user;
 
-    private void initView(View view) {
-        user = FuLiCenterApplication.getUser();
-        if (user == null) {
-            startActivity(new Intent(getActivity(), LoginActivity.class));
+    private void setListener() {
 
-        } else {
-            showInfo();
+        imageAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivityForResult(intent, 1);
+
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case 1:
+                    boolean login_result = data.getBooleanExtra("login_result", false);
+                    if (login_result) {
+                        showInfo();
+
+                    }
+                    break;
+            }
         }
     }
 
+    private void initView(View view) {
+
+
+        showInfo();
+    }
+
     private void showInfo() {
-        toolbarPersion.setTitle(user.getMuserNick());
-        ImageLoader.downloadImg(getContext(), imageAvatar, user.getAvatar());
+        user = FuLiCenterApplication.getUser();
+        if (user != null) {
+            toolbarPersion.setTitle(user.getMuserNick());
+            ImageLoader.downloadImg(getContext(), imageAvatar, user.getAvatar());
+        }
     }
 
 
