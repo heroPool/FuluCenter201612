@@ -10,7 +10,7 @@ import com.example.administrator.fulishe201612.model.bean.MessageBean;
  */
 
 public interface IGoodsDetialsModel {
-    void loadData(Context context,int goodsId, OnCompleteListener<GoodsDetailsBean> listener);
+    void loadData(Context context, int goodsId, OnCompleteListener<GoodsDetailsBean> listener);
 
-    void isCollect(Context context, String username, int goodsId, OnCompleteListener<MessageBean> listener);
+    void isCollect(Context context, int action, String username, int goodsId, OnCompleteListener<MessageBean> listener);
 }

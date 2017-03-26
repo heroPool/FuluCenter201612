@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="#fff">
+
+    <CheckBox
+        android:id="@+id/checkBox_cart_isCheck"
+        style="@style/CustomCheckboxTheme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="15dp"
+        android:checked="true" />
+
+    <ImageView
+        android:id="@+id/image_cart_goods"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@id/checkBox_cart_isCheck"
+        app:srcCompat="@mipmap/launcher" />
+
+    <TextView
+        android:id="@+id/text_cart_goodsinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/image_cart_goods"
+        android:maxLength="15"
+        android:maxLines="1"
+        android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/image_cart_sub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/text_cart_goodsinfo"
+        android:layout_below="@id/checkBox_cart_isCheck"
+        app:srcCompat="@mipmap/del_cart" />
+
+    <EditText
+        android:id="@+id/edit_cart_goods_num"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/image_cart_sub"
+        android:ems="5"
+        android:inputType="textPersonName"
+        android:text="1" />
+
+    <ImageView
+        android:id="@+id/image_cart_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/image_cart_sub"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/edit_cart_goods_num"
+        app:srcCompat="@mipmap/add_cart" />
+
+    <TextView
+        android:id="@+id/text_cart_item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+
+        android:layout_alignTop="@id/checkBox_cart_isCheck"
+        android:layout_marginEnd="15dp"
+        android:text="TextView" />
+</RelativeLayout>

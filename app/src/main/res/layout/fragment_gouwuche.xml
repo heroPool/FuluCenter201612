@@ -1,62 +1,97 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swiperefreshlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.administrator.fulishe201612.fragments.Gouwuche">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="#fff">
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toobar_cart"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+        </android.support.v7.widget.Toolbar>
 
         <TextView
-            android:id="@+id/textJiesuan"
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-
-            android:background="#fc6d37"
+            android:id="@+id/text_hint"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
             android:gravity="center"
-            android:text="结算(0)"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+            android:text="天啊，购物车空空如也！"
+            android:textSize="20sp"
+            android:visibility="gone" />
 
         <TextView
-            android:id="@+id/texteHeji"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
+            android:id="@+id/textview_hint"
 
-            android:layout_marginTop="4dp"
-            android:layout_toStartOf="@id/textJiesuan"
-            android:text="合计:￥0"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/textJiesheng"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="刷新中..."
+
+            android:textSize="15sp"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_cart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_hint">
+        </android.support.v7.widget.RecyclerView>
+
+        <RelativeLayout
+            android:id="@+id/layout_cart_bottom_menu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/texteHeji"
-            android:layout_marginBottom="3dp"
-            android:text="节省:"
-            android:textSize="15sp" />
+            android:background="#fff">
+
+            <TextView
+                android:id="@+id/textJiesuan"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+
+                android:background="#fc6d37"
+                android:gravity="center"
+                android:text="结算(0)"
+                android:textColor="#fff"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/texteHeji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+
+                android:layout_marginTop="4dp"
+                android:layout_toStartOf="@id/textJiesuan"
+                android:text="合计:￥0"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/textJiesheng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignStart="@+id/texteHeji"
+                android:layout_marginBottom="3dp"
+                android:text="节省:"
+                android:textSize="15sp" />
 
 
-        <CheckBox
-            android:id="@+id/checkBoxQuanxuan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="全选" />
+            <CheckBox
+                android:id="@+id/checkBoxQuanxuan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:text="全选" />
+        </RelativeLayout>
+
     </RelativeLayout>
-
-
-</RelativeLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

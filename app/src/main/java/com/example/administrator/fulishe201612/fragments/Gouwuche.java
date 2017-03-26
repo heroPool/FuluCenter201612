@@ -1,104 +1,223 @@
 package com.example.administrator.fulishe201612.fragments;
 
-import android.content.Context;
-import android.net.Uri;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.administrator.fulishe201612.R;
+import com.example.administrator.fulishe201612.adapter.CartRecyclerviewAdapter;
+import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
+import com.example.administrator.fulishe201612.model.bean.CartBean;
+import com.example.administrator.fulishe201612.model.bean.GoodsDetailsBean;
+import com.example.administrator.fulishe201612.model.bean.User;
+import com.example.administrator.fulishe201612.model.net.CartModel;
+import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
+import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Gouwuche.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Gouwuche#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class Gouwuche extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    @BindView(R.id.text_hint)
+    TextView textHint;
+    @BindView(R.id.recyclerView_cart)
+    RecyclerView recyclerViewCart;
+    @BindView(R.id.textJiesuan)
+    TextView textJiesuan;
+    @BindView(R.id.texteHeji)
+    TextView texteHeji;
+    @BindView(R.id.textJiesheng)
+    TextView textJiesheng;
+    @BindView(R.id.checkBoxQuanxuan)
+    CheckBox checkBoxQuanxuan;
+    @BindView(R.id.layout_cart_bottom_menu)
+    RelativeLayout layoutCartBottomMenu;
+    Unbinder unbinder;
+    @BindView(R.id.swiperefreshlayout)
+    SwipeRefreshLayout swiperefreshlayout;
 
-    public Gouwuche() {
-        // Required empty public constructor
+    CartModel cartModel;
+    LinearLayoutManager linearLayoutManager;
+    @BindView(R.id.textview_hint)
+    TextView textviewHint;
+    @BindView(R.id.toobar_cart)
+    Toolbar toobarCart;
+
+    public Gouwuche() {// Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Gouwuche.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Gouwuche newInstance(String param1, String param2) {
-        Gouwuche fragment = new Gouwuche();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_gouwuche, container, false);
+        View view = inflater.inflate(R.layout.fragment_gouwuche, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toobarCart);
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        cartModel = new CartModel();
+        initView();
+        initData();
+        setListener();
+    }
+
+    private void setListener() {
+        setPullDownListener();
+        cartRecyclerAdapter.setListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int position = (int) buttonView.getTag();
+                cartList.get(position).setChecked(isChecked);
+                setPriceText();
+
+            }
+        });
+    }
+
+    private void setPullDownListener() {
+        swiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                setRefresh(true);
+                initData();
+
+            }
+        });
+    }
+
+    User user;
+
+    private void initData() {
+        user = FuLiCenterApplication.getUser();
+        if (user != null) {
+            showCartList();
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    private void showCartList() {
+        cartModel.loadData(getContext(), user.getMuserName(), new OnCompleteListener<CartBean[]>() {
+            @Override
+            public void onSuccess(CartBean[] result) {
 
+                setCartListLayout(true);
+                if (result != null) {
+                    cartList.clear();
+                    if (result.length > 0) {
+                        ArrayList<CartBean> list = OkHttpUtils.array2List(result);
+                        cartList.addAll(list);
+                        cartRecyclerAdapter.notifyDataSetChanged();
+                    }
+                }
+                setRefresh(false);
+            }
+
+            @Override
+            public void onError(String error) {
+                setRefresh(false);
+
+            }
+        });
+    }
+
+    private void setRefresh(boolean refresh) {
+        swiperefreshlayout.setRefreshing(refresh);
+        textviewHint.setVisibility(refresh ? View.VISIBLE : View.GONE);
+    }
+
+    CartRecyclerviewAdapter cartRecyclerAdapter;
+    ArrayList<CartBean> cartList = new ArrayList<>();
+
+    private void initView() {
+        swiperefreshlayout.setColorSchemeColors(getResources().getColor(R.color.google_blue),
+                getResources().getColor(R.color.google_green),
+                getResources().getColor(R.color.google_red),
+                getResources().getColor(R.color.google_yellow));
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerViewCart.setLayoutManager(linearLayoutManager);
+        recyclerViewCart.setHasFixedSize(true);
+        cartRecyclerAdapter = new CartRecyclerviewAdapter(getContext(), cartList);
+        recyclerViewCart.setAdapter(cartRecyclerAdapter);
+        recyclerViewCart.addItemDecoration(new SpaceItemDecoration(12));
+        setCartListLayout(false);
+    }
+
+    private void setCartListLayout(boolean isShow) {
+        textHint.setVisibility(isShow ? View.GONE : View.VISIBLE);
+        layoutCartBottomMenu.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        setPriceText();
+    }
+
+    private void setPriceText() {
+        int sumPrice = 0;
+        int rankPrice = 0;
+        for (CartBean cart : cartList) {
+            if (cart.isChecked()) {
+                GoodsDetailsBean goods = cart.getGoods();
+                if (goods != null) {
+                    sumPrice += getPrice(goods.getCurrencyPrice()) * cart.getCount();
+                    rankPrice += getPrice(goods.getRankPrice()) * cart.getCount();
+                }
+            }
+        }
+    }
+
+    private int getPrice(String price) {
+        String priceStr = price.substring(price.indexOf("￥") + 1);
+        return Integer.valueOf(priceStr);
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    class SpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int space;
+
+        public SpaceItemDecoration(int space) {
+            this.space = space;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            int pos = parent.getChildLayoutPosition(view);
+            if (parent.getChildPosition(view) != 0)
+                outRect.top = space;
+
+            // 设置左右间距
+            outRect.set(space / 2, 0, space / 2, 0);
+
+            // 从第二行开始 top = mSpace
+//            if (pos >= I.COLUM_NUM) {
+            outRect.top = space;
+//            } else {
+//                outRect.top = 0;
+//            }
+        }
     }
 }

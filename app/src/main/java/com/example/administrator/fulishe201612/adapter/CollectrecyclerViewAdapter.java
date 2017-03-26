@@ -95,9 +95,8 @@ public class CollectrecyclerViewAdapter extends RecyclerView.Adapter implements 
                     public void onSuccess(MessageBean result) {
                         if (result != null && result.isSuccess()) {
                             collectBeanArrayList.remove(position);
-                            notifyDataSetChanged();
-
-//                            notifyItemRemoved(position);
+                            notifyItemRemoved(position);
+//                          notifyItemRemoved(position);
                         }
                     }
 

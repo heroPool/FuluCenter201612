@@ -8,8 +8,14 @@
         android:title="收藏"
         app:showAsAction="always" />
     <item
+        android:id="@+id/menu_addCart"
+        android:icon="@mipmap/menu_item_cart_selected"
+        android:title=""
+        app:showAsAction="always" />
+    <item
         android:id="@+id/menu_share"
-        android:icon="@mipmap/bg_share_nor"
+        android:icon="@mipmap/bg_share_sel"
         android:title="分享"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
+
 </menu>

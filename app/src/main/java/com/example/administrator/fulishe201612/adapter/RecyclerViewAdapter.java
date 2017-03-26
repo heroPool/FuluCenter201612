@@ -65,7 +65,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View inflate = View.inflate(context, R.layout.xinppin_footer, null);
             return new FooterHolder(inflate);
         }
-        View inflate = View.inflate(context, R.layout.xinpin_detailinfo, null);
+        View inflate = View.inflate(context, R.layout.item_goodsdetailinfo, null);
         return new ViewHolder(inflate);
     }
     @Override
@@ -86,6 +86,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         contentHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+//                FuLiCenterApplication.getInstance().setIndex(0);
+//                Log.i(TAG, "setindex=" + 0);
                 context.startActivity(new Intent(context, GoodsDetialsActivtiy.class)
                         .putExtra(I.Goods.KEY_GOODS_ID, goodsBean.getGoodsId())
                 );
@@ -94,6 +97,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
+    private static final String TAG = "RecyclerViewAdapter";
     @Override
     public int getItemViewType(int position) {
         if (getItemCount() - 1 == position) {

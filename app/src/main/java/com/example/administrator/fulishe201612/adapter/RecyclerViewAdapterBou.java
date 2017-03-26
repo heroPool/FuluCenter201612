@@ -7,12 +7,14 @@ package com.example.administrator.fulishe201612.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.fulishe201612.R;
+import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
 import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.BoutiqueBean;
 import com.example.administrator.fulishe201612.model.utils.ImageLoader;
@@ -24,7 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-
 /**
  * Created by Administrator on 2017/3/15.
  */
@@ -33,8 +34,6 @@ public class RecyclerViewAdapterBou extends RecyclerView.Adapter<RecyclerView.Vi
 
     Context context;
     ArrayList<BoutiqueBean> goodsList;
-
-
 
 
     public RecyclerViewAdapterBou(Context context, ArrayList<BoutiqueBean> goodsList) {
@@ -60,18 +59,21 @@ public class RecyclerViewAdapterBou extends RecyclerView.Adapter<RecyclerView.Vi
         viewHolder.textdescription.setText(boutiqueBean.getDescription());
 
         ImageLoader.downloadImg(context, viewHolder.imageGoods, boutiqueBean.getImageurl());
-
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FuLiCenterApplication.getInstance().setIndex(1);
+                Log.i(TAG, "setindex=" + 1);
                 context.startActivity(new Intent(context, BoutiqueAndListActivity.class)
                         .putExtra(I.NewAndBoutiqueGoods.CAT_ID, boutiqueBean.getId())
-                        .putExtra("title",boutiqueBean.getTitle())
+                        .putExtra("title", boutiqueBean.getTitle())
                 );
             }
         });
 
-}
+    }
+
+    private static final String TAG = "RecyclerViewAdapterBou";
 
     @Override
     public int getItemViewType(int position) {
@@ -100,7 +102,7 @@ public class RecyclerViewAdapterBou extends RecyclerView.Adapter<RecyclerView.Vi
 
     }
 
-    static class ViewHolder  extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.imageGoods)
         ImageView imageGoods;
         @BindView(R.id.texttitle)

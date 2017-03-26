@@ -390,6 +390,7 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_persion"
                 android:layout_width="match_parent"
+                app:title="未登录"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />
 

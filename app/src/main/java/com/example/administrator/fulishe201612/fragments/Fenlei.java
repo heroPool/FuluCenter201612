@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.adapter.ExpandableAdapter;
+import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
 import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.CategoryChildBean;
 import com.example.administrator.fulishe201612.model.bean.CategoryGroupBean;
@@ -65,6 +68,13 @@ public class Fenlei extends Fragment {
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.menu_fenlei, menu);
+
+    }
+
     private void initData() {
         cateListModel.loadData(getActivity(), new OnCompleteListener<CategoryGroupBean[]>() {
             @Override
@@ -111,18 +121,21 @@ public class Fenlei extends Fragment {
                 });
     }
 
+    private static final String TAG = "Fenlei";
+
     private void initView(View inflate) {
         expandableListView = (ExpandableListView) inflate.findViewById(R.id.expandableListView);
         expandableAdapter = new ExpandableAdapter(getActivity(), categoryGroupBeen, categoryChildBeen);
         expandableListView.setAdapter(expandableAdapter);
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 ArrayList<CategoryChildBean> categoryChildBeen = Fenlei.this.categoryChildBeen.get(groupPosition);
                 String groupItem = categoryGroupBeen.get(groupPosition).getName();
 
                 Log.i("popu", "bfore:" + categoryChildBeen.toString());
+                FuLiCenterApplication.getInstance().setIndex(2);
+                Log.i(TAG, "setindex=" + 2);
                 startActivity(new Intent(getActivity(), BoutiqueAndListActivity.class)
 
                         .putExtra("title", Fenlei.this.categoryChildBeen.get(groupPosition).get(childPosition).getName())

@@ -82,12 +82,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.d(TAG, "onCreateOptionsMenu: " + index);
-        if (index == 2) {
-            getMenuInflater().inflate(R.menu.menu_fenlei, menu);
-        }
-        if (index == 4) {
-            getMenuInflater().inflate(R.menu.menu_persionlcenter, menu);
-        }
+//        if (index == 2) {
+//
+//            getMenuInflater().inflate(R.menu.menu_fenlei, menu);
+//        }
+//        if (index == 4) {
+//            getMenuInflater().inflate(R.menu.menu_persionlcenter, menu);
+//        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -143,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case 3:
                         if (FuLiCenterApplication.getUser() == null) {
+                            FuLiCenterApplication.getInstance().setIndex(3);
+
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivityForResult(intent, I.REQUEST_CODE_LOGIN_FROM_CART);
 
@@ -152,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         break;
                     case 4:
                         if (FuLiCenterApplication.getUser() == null) {
+                            FuLiCenterApplication.getInstance().setIndex(4);
                             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                             startActivityForResult(intent, I.REQUEST_CODE_LOGIN);
                         }
@@ -226,7 +230,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
-    private static final String TAG = "MainActivity:";
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -243,13 +246,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    private static final String TAG = "MainActivity";
     @Override
     protected void onResume() {
         super.onResume();
+        int index = FuLiCenterApplication.getInstance().getIndex();
+        Log.i(TAG, "index=" + index);
         initView();
-        btnXinpin.setChecked(true);
-    }
+        viewPager.setCurrentItem(index);
+        switch (index) {
+            case 0:
+                btnXinpin.setChecked(true);
+                break;
+            case 1:
+                btnJingxuan.setChecked(true);
+                break;
+            case 2:
+                btnFenlei.setChecked(true);
+                break;
+            case 3:
+                btnGouwuche.setChecked(true);
+                break;
+            case 4:
+                btnGeren.setChecked(true);
+                break;
+        }
 
+    }
 
     @Override
     protected void onDestroy() {

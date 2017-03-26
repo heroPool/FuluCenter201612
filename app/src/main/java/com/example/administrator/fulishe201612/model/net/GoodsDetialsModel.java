@@ -22,12 +22,19 @@ public class GoodsDetialsModel implements IGoodsDetialsModel {
     }
 
     @Override
-    public void isCollect(Context context, String username, int goodsId, OnCompleteListener<MessageBean> listener) {
+    public void isCollect(Context context, int action,String username, int goodsId, OnCompleteListener<MessageBean> listener) {
+        String request = I.REQUEST_IS_COLLECT;
         OkHttpUtils<MessageBean> okHttpUtils = new OkHttpUtils<>(context);
-        okHttpUtils.setRequestUrl(I.REQUEST_IS_COLLECT)
+        if (action == I.ACTION_ADD_COLLECT) {
+            request = I.REQUEST_ADD_COLLECT;
+        } else if (action == I.ACTION_DELETE_COLLECT) {
+            request = I.REQUEST_DELETE_COLLECT;
+        }
+        okHttpUtils.setRequestUrl(request)
                 .addParam(I.Collect.USER_NAME, username)
                 .addParam(I.Goods.KEY_GOODS_ID, goodsId + "")
                 .targetClass(MessageBean.class)
                 .execute(listener);
+
     }
 }

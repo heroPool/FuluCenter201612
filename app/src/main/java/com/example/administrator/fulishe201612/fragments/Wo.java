@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -100,6 +102,8 @@ public class Wo extends Fragment {
         layoutCenterCollect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FuLiCenterApplication.getInstance().setIndex(4);
+
                 Intent intent = new Intent(getActivity(), CollectionActivity.class);
                 startActivity(intent);
             }
@@ -107,11 +111,18 @@ public class Wo extends Fragment {
         imageAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FuLiCenterApplication.getInstance().setIndex(4);
                 Intent intent = new Intent(getActivity(), SettingsActivity.class);
                 startActivityForResult(intent, 1);
 
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        getActivity().getMenuInflater().inflate(R.menu.menu_persionlcenter, menu);
     }
 
     @Override

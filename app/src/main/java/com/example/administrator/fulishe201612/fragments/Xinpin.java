@@ -54,6 +54,7 @@ public class Xinpin extends Fragment {
         // Required empty public constructor
     }
 
+
     int pageId = 1;
     int cat_id;
 
@@ -71,9 +72,7 @@ public class Xinpin extends Fragment {
         // Inflate the layout for this fragment
         View inflate = inflater.inflate(R.layout.fragment_xinpin, container, false);
         initView(inflate);
-
         cat_id = getActivity().getIntent().getIntExtra(I.NewAndBoutiqueGoods.CAT_ID, 0);
-
         String boolea = getActivity().getIntent().getStringExtra("boolea");
 
         if (boolea != null) {
@@ -92,9 +91,9 @@ public class Xinpin extends Fragment {
 
     }
 
+
     private void setListener() {
         //下拉刷新
-
         swiperefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -123,6 +122,8 @@ public class Xinpin extends Fragment {
         });
 
     }
+
+
 
     Handler handler;
     ProgressDialog progressDialog;

@@ -12,6 +12,16 @@ import com.example.administrator.fulishe201612.model.utils.AntiShake;
 public class FuLiCenterApplication extends Application {
 
     AntiShake util = new AntiShake();
+    int index;
+
+    public int getIndex() {
+
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     public AntiShake getUtil() {
         return util;
