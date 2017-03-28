@@ -41,6 +41,7 @@ public class FuLiCenterApplication extends Application {
 
         super.onCreate();
         instance = this;
+        ShareSDK.initSDK(this);
     }
 
     private static User user;

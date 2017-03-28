@@ -1,5 +1,6 @@
 package com.example.administrator.fulishe201612.fragments;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,11 +28,20 @@ import com.example.administrator.fulishe201612.model.net.CartModel;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
 import com.example.administrator.fulishe201612.model.utils.L;
 import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
+import com.pingplusplus.android.PingppLog;
+import com.pingplusplus.libone.PaymentHandler;
+import com.pingplusplus.libone.PingppOne;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class Gouwuche extends Fragment {
@@ -65,6 +75,7 @@ public class Gouwuche extends Fragment {
     public Gouwuche() {// Required empty public constructor
     }
 
+    private static String URL = "http://218.244.151.190/demo/charge";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,8 +93,21 @@ public class Gouwuche extends Fragment {
         cartModel = new CartModel();
         initView();
         initData();
+        initPay();
         setListener();
     }
+
+    private void initPay() {
+        //设置需要使用的支付方式
+        PingppOne.enableChannels(new String[]{"wx", "alipay", "upacp", "bfb", "jdpay_wap"});
+
+        // 提交数据的格式，默认格式为json
+        // PingppOne.CONTENT_TYPE = "application/x-www-form-urlencoded";
+        PingppOne.CONTENT_TYPE = "application/json";
+
+        PingppLog.DEBUG = true;
+    }
+
 
     private void setListener() {
         setPullDownListener();
@@ -214,6 +238,56 @@ public class Gouwuche extends Fragment {
         unbinder.unbind();
     }
 
+    @OnClick(R.id.textJiesuan)
+    public void onViewClicked() {
+
+        // 产生个订单号
+        String orderNo = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+
+        // 计算总金额（以分为单位）
+        int amount = 100 * 100;
+//        JSONArray billList = new JSONArray();
+//        for (Good good : mList) {
+//            amount += good.getPrice() * good.getCount() * 100;
+//            billList.put(good.getName() + " x " + good.getCount());
+//        }
+        // 构建账单json对象
+        JSONObject bill = new JSONObject();
+
+        // 自定义的额外信息 选填
+        JSONObject extras = new JSONObject();
+        try {
+            extras.put("extra1", "extra1");
+            extras.put("extra2", "extra2");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            bill.put("order_no", orderNo);
+            bill.put("amount", amount);
+            bill.put("extras", extras);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //壹收款: 创建支付通道的对话框
+        PingppOne.showPaymentChannels(getActivity(), bill.toString(), URL, new PaymentHandler() {
+            @Override
+            public void handlePaymentResult(Intent data) {
+                if (data != null) {
+                    /**
+                     * code：支付结果码  -2:服务端错误、 -1：失败、 0：取消、1：成功
+                     * error_msg：支付结果信息
+                     */
+                    int code = data.getExtras().getInt("code");
+                    String result = data.getExtras().getString("result");
+                }
+            }
+        });
+
+    }
+
     class SpaceItemDecoration extends RecyclerView.ItemDecoration {
 
         private int space;
@@ -239,4 +313,6 @@ public class Gouwuche extends Fragment {
 //            }
         }
     }
+
+
 }
