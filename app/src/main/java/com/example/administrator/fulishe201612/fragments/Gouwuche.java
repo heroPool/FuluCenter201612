@@ -25,6 +25,7 @@ import com.example.administrator.fulishe201612.model.bean.GoodsDetailsBean;
 import com.example.administrator.fulishe201612.model.bean.User;
 import com.example.administrator.fulishe201612.model.net.CartModel;
 import com.example.administrator.fulishe201612.model.net.OnCompleteListener;
+import com.example.administrator.fulishe201612.model.utils.L;
 import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
 
 import java.util.ArrayList;
@@ -92,10 +93,28 @@ public class Gouwuche extends Fragment {
                 int position = (int) buttonView.getTag();
                 cartList.get(position).setChecked(isChecked);
                 setPriceText();
-
             }
         });
+        cartRecyclerAdapter.setCartUpdatelistener(updateListener);
     }
+
+    private static final String TAG = "Gouwuche";
+    View.OnClickListener updateListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            int position = (int) view.getTag();
+
+            int count = 0;
+            if (view.getTag(R.id.action_add_cart) != null) {
+                count = (int) view.getTag(R.id.action_add_cart);
+            } else if (view.getTag(R.id.action_del_cart) != null) {
+                count = (int) view.getTag(R.id.action_del_cart);
+            }
+            L.e(TAG, "updateListener,position=" + position + ",count=" + count);
+//            updateCart(position, count);
+        }
+    };
+
 
     private void setPullDownListener() {
         swiperefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

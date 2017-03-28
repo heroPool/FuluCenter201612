@@ -31,6 +31,11 @@ public class CartRecyclerviewAdapter extends RecyclerView.Adapter {
     Context context;
     ArrayList<CartBean> cartBeanArrayList;
     CompoundButton.OnCheckedChangeListener listener;
+    View.OnClickListener cartUpdatelistener;
+
+    public void setCartUpdatelistener(View.OnClickListener cartUpdatelistener) {
+        this.cartUpdatelistener = cartUpdatelistener;
+    }
 
     public CartRecyclerviewAdapter(Context context, ArrayList<CartBean> cartBeanArrayList) {
         this.context = context;
@@ -101,6 +106,15 @@ public class CartRecyclerviewAdapter extends RecyclerView.Adapter {
             }
             checkBoxCartIsCheck.setTag(position);
             checkBoxCartIsCheck.setOnCheckedChangeListener(listener);
+
+            imageCartAdd.setTag(position);
+            imageCartAdd.setTag(R.id.action_add_cart, 1);
+            imageCartAdd.setOnClickListener(cartUpdatelistener);
+
+            imageCartSub.setTag(position);
+            imageCartSub.setTag(R.id.action_del_cart,-1);
+            imageCartSub.setOnClickListener(cartUpdatelistener);
+
         }
     }
 }

@@ -3,12 +3,14 @@ package com.example.administrator.fulishe201612.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.fulishe201612.R;
+import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
 import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.NewGoodsBean;
 import com.example.administrator.fulishe201612.model.utils.ImageLoader;
@@ -87,8 +89,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             @Override
             public void onClick(View v) {
 
-//                FuLiCenterApplication.getInstance().setIndex(0);
-//                Log.i(TAG, "setindex=" + 0);
+                FuLiCenterApplication.getInstance().setIndex(0);
+                Log.i(TAG, "setindex=" + 0);
                 context.startActivity(new Intent(context, GoodsDetialsActivtiy.class)
                         .putExtra(I.Goods.KEY_GOODS_ID, goodsBean.getGoodsId())
                 );

@@ -18,7 +18,6 @@ public class FuLiCenterApplication extends Application {
 
         return index;
     }
-
     public void setIndex(int index) {
         this.index = index;
     }
