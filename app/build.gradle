@@ -41,6 +41,19 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile project(':lib:pingpp_one')
+
     compile project(':lib:bdwallet_pay_sdk')
     compile project(':lib:pingpp')
+    compile files('src/main/libs/MobCommons-2017.0322.0931.jar')
+    compile files('src/main/libs/MobTools-2017.0322.0931.jar')
+    compile files('src/main/libs/ShareSDK-Core-2.8.2.jar')
+    compile files('src/main/libs/ShareSDK-Email-2.8.2.jar')
+    compile files('src/main/libs/ShareSDK-QQ-2.8.2.jar')
+    compile files('src/main/libs/ShareSDK-QZone-2.8.2.jar')
+    compile files('src/main/libs/ShareSDK-ShortMessage-2.8.2.jar')
+    compile files('src/main/libs/ShareSDK-SinaWeibo-2.8.2.jar')
+    compile files('src/main/libs/ShareSDK-Wechat-2.8.2.jar')
+    compile files('src/main/libs/ShareSDK-Wechat-Core-2.8.2.jar')
+    compile files('src/main/libs/ShareSDK-Wechat-Favorite-2.8.2.jar')
+    compile files('src/main/libs/ShareSDK-Wechat-Moments-2.8.2.jar')
 }

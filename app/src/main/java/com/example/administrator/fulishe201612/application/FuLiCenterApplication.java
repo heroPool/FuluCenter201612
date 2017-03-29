@@ -5,6 +5,8 @@ import android.app.Application;
 import com.example.administrator.fulishe201612.model.bean.User;
 import com.example.administrator.fulishe201612.model.utils.AntiShake;
 
+import cn.sharesdk.framework.ShareSDK;
+
 /**
  * Created by Administrator on 2017/3/14.
  */
