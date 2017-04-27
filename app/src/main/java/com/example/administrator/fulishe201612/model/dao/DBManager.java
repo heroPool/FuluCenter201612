@@ -17,7 +17,6 @@ public class DBManager {
 
     void onInit(Context context) {
         dbOpenHelper = new DBOpenHelper(context);
-
     }
 
     public static synchronized DBManager getInstance() {
@@ -65,9 +64,9 @@ public class DBManager {
             user.setMavatarSuffix(cursor.getString(cursor.getColumnIndex(UserDao.USER_COLUMN_AVATAR_SUFFIX)));
             user.setMavatarLastUpdateTime(cursor.getString(cursor.getColumnIndex(UserDao.USER_COLUMN_AVATAR_LASTUPDATE_TIME)));
             return user;
-
         }
         return null;
+
     }
 
     public synchronized boolean updateUser(User user) {

@@ -3,6 +3,7 @@ package com.example.administrator.fulishe201612.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -44,6 +45,7 @@ public class Fenlei extends Fragment {
     ExpandableAdapter expandableAdapter;
     @BindView(R.id.toobar_fenlei)
     Toolbar toobarFenlei;
+    Handler handler;
 
     public Fenlei() {
 
@@ -63,6 +65,7 @@ public class Fenlei extends Fragment {
         setHasOptionsMenu(true);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toobarFenlei);
         initData();
+
         initView(inflate);
         return inflate;
 
@@ -139,7 +142,8 @@ public class Fenlei extends Fragment {
                 startActivity(new Intent(getActivity(), BoutiqueAndListActivity.class)
 
                         .putExtra("title", Fenlei.this.categoryChildBeen.get(groupPosition).get(childPosition).getName())
-                        .putExtra(I.NewAndBoutiqueGoods.CAT_ID, Fenlei.this.categoryChildBeen.get(groupPosition).get(childPosition).getId())
+                        .putExtra(I.NewAndBoutiqueGoods.CAT_ID, Fenlei.this.categoryChildBeen.get(groupPosition)
+                                .get(childPosition).getId())
                         .putExtra("boolea", "1")
                         .putExtra("childList", categoryChildBeen)
                         .putExtra("groupItem", groupItem)

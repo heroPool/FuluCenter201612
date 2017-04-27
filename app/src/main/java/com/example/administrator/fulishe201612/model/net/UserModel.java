@@ -33,6 +33,7 @@ public class UserModel implements IUserModel {
                 .addParam(I.User.NICK, nickName)
                 .targetClass(Result.class)
                 .post()
+
                 .execute(listener);
     }
 

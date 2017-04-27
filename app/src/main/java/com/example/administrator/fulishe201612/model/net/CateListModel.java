@@ -2,7 +2,6 @@ package com.example.administrator.fulishe201612.model.net;
 
 import android.content.Context;
 
-import com.example.administrator.fulishe201612.adapter.ExpandableAdapter;
 import com.example.administrator.fulishe201612.application.I;
 import com.example.administrator.fulishe201612.model.bean.CategoryChildBean;
 import com.example.administrator.fulishe201612.model.bean.CategoryGroupBean;
@@ -13,7 +12,6 @@ import com.example.administrator.fulishe201612.model.utils.OkHttpUtils;
  * Created by Administrator on 2017/3/16.
  */
 public class CateListModel implements ICateListModel {
-    ExpandableAdapter expandableAdapter;
 
 
     @Override

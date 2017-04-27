@@ -16,7 +16,7 @@ import android.widget.RadioButton;
 import com.example.administrator.fulishe201612.R;
 import com.example.administrator.fulishe201612.application.FuLiCenterApplication;
 import com.example.administrator.fulishe201612.application.I;
-import com.example.administrator.fulishe201612.fragments.Fenlei;
+import com.example.administrator.fulishe201612.fragments.CategoryFragment;
 import com.example.administrator.fulishe201612.fragments.Gouwuche;
 import com.example.administrator.fulishe201612.fragments.Jingxuan;
 import com.example.administrator.fulishe201612.fragments.Wo;
@@ -64,7 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFragments = new Fragment[5];
         mFragments[0] = new Xinpin();
         mFragments[1] = new Jingxuan();
-        mFragments[2] = new Fenlei();
+//        mFragments[2] = new Fenlei();
+        mFragments[2] = new CategoryFragment();
         mFragments[3] = new Gouwuche();
         wo = new Wo();
         mFragments[4] = wo;

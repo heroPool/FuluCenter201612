@@ -54,6 +54,8 @@ public class UserDao {
 
     }
     public boolean updateUser(User user) {
+
         return DBManager.getInstance().updateUser(user);
     }
+
 }

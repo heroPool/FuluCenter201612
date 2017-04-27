@@ -1,7 +1,6 @@
 package com.example.administrator.fulishe201612.model.dao;
 
 import android.content.Context;
-import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -12,7 +11,7 @@ import com.example.administrator.fulishe201612.application.I;
  */
 
 public class DBOpenHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION=1;
+    private static final int DATABASE_VERSION = 1;
     private static DBOpenHelper instance;
     private static final String FULICENTER_USER_TABLE_CREATE = "CREATE TABLE "
             + UserDao.USER_TABLE_NAME + " ("
@@ -31,15 +30,16 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         }
         return instance;
     }
+
     public DBOpenHelper(Context context) {
         super(context, getUserDataBaseName(), null, DATABASE_VERSION);
-
     }
 
     private static String getUserDataBaseName() {
 
         return I.User.TABLE_NAME + "_demo.db";
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(FULICENTER_USER_TABLE_CREATE);
@@ -54,6 +54,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         if (instance != null) {
             SQLiteDatabase db = instance.getWritableDatabase();
             db.close();
+//            instance.closeDB();    //关闭数据库
             instance = null;
         }
     }
